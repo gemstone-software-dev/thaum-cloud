@@ -71,7 +71,7 @@ article#furo-main-content h1 {
   text-align: center;
 }
 .highlight {
-  background-color: #eef0f3 !important;
+  background-color: var(--color-code-background) !important;
 }
 
 
