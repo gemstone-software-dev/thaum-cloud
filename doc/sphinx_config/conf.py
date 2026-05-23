@@ -63,11 +63,13 @@ html_theme_options = {
         "font-stack": '"Open Sans", ui-sans-serif, system-ui, sans-serif',
         "font-stack--monospace": '"Source Code Pro", ui-monospace, monospace',
         "color-thaum-heading-border": "#2e7d4a",
+        "color-sidebar-background": "#eaf5ef",
     },
     "dark_css_variables": {
         "font-stack": '"Open Sans", ui-sans-serif, system-ui, sans-serif',
         "font-stack--monospace": '"Source Code Pro", ui-monospace, monospace',
         "color-thaum-heading-border": "#5cb87a",
+        "color-sidebar-background": "#0d1a12",
     },
 }
 
