@@ -8,6 +8,23 @@
   object-fit: cover;
 }
 
+/* Sidebar search: same background as main content, subtle rounding */
+.sidebar-search-container {
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-sidebar-search-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.sidebar-search-container:hover,
+.sidebar-search-container:focus-within {
+  background: var(--color-background-primary);
+}
+
+.sidebar-search {
+  border: none;
+}
+
 /*
  * H1–H6: Cormorant Garamond SC — mixed case with true small caps.
  * Keep normal Title Case in RST; this face renders lowercase letters as
