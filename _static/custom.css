@@ -46,8 +46,8 @@ article#furo-main-content h1 {
   border-image: linear-gradient(
         to right,
         transparent,
-        var(--color-thaum-heading-border) 20%,
-        var(--color-thaum-heading-border) 80%,
+        var(--color-thaum-heading-border) 30%,
+        var(--color-thaum-heading-border) 70%,
         transparent 100%
   );
   border-image-slice: 1;
