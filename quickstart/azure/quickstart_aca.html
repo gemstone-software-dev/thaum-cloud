@@ -1,0 +1,1038 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="prev" title="Thaum Cloud" href="../../index.html">
+        <link rel="prefetch" href="../../_static/Thaum_wizard_cgi.jpg" as="image">
+        <link rel="prefetch" href="../../_static/Thaum_wizard_cgi.jpg" as="image">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+        <title>Azure Container Apps Quickstart - Thaum Cloud</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=be44a381" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --font-stack: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-stack--monospace: "Source Code Pro", ui-monospace, monospace;
+  --color-thaum-heading-border: #2e7d4a;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --font-stack: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-stack--monospace: "Source Code Pro", ui-monospace, monospace;
+  --color-thaum-heading-border: #5cb87a;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --font-stack: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-stack--monospace: "Source Code Pro", ui-monospace, monospace;
+  --color-thaum-heading-border: #5cb87a;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Thaum Cloud</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../../_static/Thaum_wizard_cgi.jpg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../../_static/Thaum_wizard_cgi.jpg" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Thaum Cloud</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Quickstarts</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Azure Container Apps Quickstart</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/quickstart/azure/quickstart_aca.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="azure-container-apps-quickstart">
+<h1>Azure Container Apps Quickstart<a class="headerlink" href="#azure-container-apps-quickstart" title="Link to this heading">¶</a></h1>
+<p id="azure-aca-quickstart">Run <strong>Thaum</strong> on <strong>Azure Container Apps</strong> with <strong>GitHub Container Registry (GHCR)</strong>, <strong>OIDC</strong> deploy (<code class="docutils literal notranslate"><span class="pre">deploy-aca.yml</span></code>), <strong>Azure Key Vault</strong> for application secrets, and <strong>Log Analytics</strong> for platform and container logs.</p>
+<p><strong>Golden path:</strong> private deploy repository, <strong>private</strong> GHCR package, machine-user <code class="docutils literal notranslate"><span class="pre">GHCR_PULL_*</span></code> on the Container App, Entra <strong>federated credentials</strong> for GitHub Actions—no Azure client secret in GitHub.</p>
+<p>Example artifacts (Dockerfile, optional ACR workflow) live under <code class="docutils literal notranslate"><span class="pre">azure/github/</span></code>.</p>
+<p>Microsoft reference for ACA secrets: <a class="reference external" href="https://learn.microsoft.com/en-us/azure/container-apps/manage-secrets?tabs=azure-cli">Manage secrets in Azure Container Apps</a> (<code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code>, volumes, <code class="docutils literal notranslate"><span class="pre">secretref</span></code>).</p>
+<p><strong>Naming:</strong> Key Vault secret names use alphanumeric characters and hyphens. Container Apps secret names <strong>must</strong> be lowercase and at most <strong>20 characters</strong>. Use <strong>kebab-case</strong> so names align across Key Vault, ACA secrets, and <code class="docutils literal notranslate"><span class="pre">secret:&lt;name&gt;</span></code> in <code class="docutils literal notranslate"><span class="pre">thaum.toml</span></code>.</p>
+<section id="requirements-for-this-deployment-pattern">
+<span id="azure-aca-requirements"></span><h2>Requirements for this deployment pattern<a class="headerlink" href="#requirements-for-this-deployment-pattern" title="Link to this heading">¶</a></h2>
+<p>The keywords <strong>MUST</strong> and <strong>MUST NOT</strong> are interpreted as described in <a class="reference external" href="https://www.rfc-editor.org/info/rfc2119">RFC 2119</a>. They apply only to repositories that use this Actions + ACA workflow.</p>
+<ul class="simple">
+<li><p>The <strong>deploy repository</strong> (bakes <code class="docutils literal notranslate"><span class="pre">thaum.toml</span></code> into the image via <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code> and CI) <strong>MUST</strong> be <strong>private</strong> on the Git host. A <strong>public</strong> deploy repository <strong>MUST NOT</strong> be used for this pattern.</p></li>
+<li><p>The <strong>GHCR package</strong> for that image lineage <strong>MUST</strong> be <strong>private</strong>.</p></li>
+<li><p>Credentials for ACA to <strong>pull</strong> the package <strong>MUST</strong> use a PAT owned by a <strong>machine user</strong> (<a class="reference external" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#machine-users">dedicated automation account</a>), not a personal PAT. Store it only as repository secret <code class="docutils literal notranslate"><span class="pre">GHCR_PULL_PAT</span></code>; <strong>MUST NOT</strong> commit tokens to tracked files.</p></li>
+</ul>
+</section>
+<section id="what-you-get">
+<h2>What you get<a class="headerlink" href="#what-you-get" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper wrap-table docutils container">
+<table class="wrap-table docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Aspect</p></th>
+<th class="head"><p>Behavior</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Topology</strong></p></td>
+<td><p>One resource group, one Container Apps <strong>environment</strong> (with Log Analytics), one Container App</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Registry</strong></p></td>
+<td><p><strong>GHCR</strong>; CI pushes with <code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code>; ACA pulls with machine-user <code class="docutils literal notranslate"><span class="pre">GHCR_PULL_PAT</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Deploy identity</strong></p></td>
+<td><p><strong>OIDC</strong> to Azure—no Entra client secret in GitHub</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>App secrets</strong></p></td>
+<td><p><strong>Key Vault</strong> + user-assigned managed identity (UAMI) + <code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code> on the Container App</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Default database</strong></p></td>
+<td><p>Bundled PostgreSQL in the image (<code class="docutils literal notranslate"><span class="pre">THAUM_EXTERNAL_DB</span></code> unset). Ephemeral disk—data can be lost on revision/restart unless you add storage or an external database</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Logging</strong></p></td>
+<td><p><strong>Log Analytics workspace</strong> wired to the Container Apps environment (console/system logs)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Azure subscription with rights to create resource groups, Log Analytics, Container Apps, Key Vault, managed identities, and to <strong>assign RBAC</strong> and <strong>write</strong> Key Vault secrets for whoever runs provisioning.</p></li>
+<li><p><strong>Bash:</strong> <a class="reference external" href="https://learn.microsoft.com/cli/azure/install-azure-cli">Azure CLI</a> (<code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">login</span></code>) with the <code class="docutils literal notranslate"><span class="pre">containerapp</span></code> extension.</p></li>
+<li><p><strong>PowerShell:</strong> <a class="reference external" href="https://learn.microsoft.com/powershell/azure/install-azure-powershell">Az PowerShell modules</a> — at least <code class="docutils literal notranslate"><span class="pre">Az.Accounts</span></code>, <code class="docutils literal notranslate"><span class="pre">Az.Resources</span></code>, <code class="docutils literal notranslate"><span class="pre">Az.Monitor</span></code>, <code class="docutils literal notranslate"><span class="pre">Az.KeyVault</span></code>, <code class="docutils literal notranslate"><span class="pre">Az.ManagedServiceIdentity</span></code>, <code class="docutils literal notranslate"><span class="pre">Az.App</span></code>. Sign in with <code class="docutils literal notranslate"><span class="pre">Connect-AzAccount</span></code>; select subscription with <code class="docutils literal notranslate"><span class="pre">Set-AzContext</span> <span class="pre">-SubscriptionId</span> <span class="pre">...</span></code>.</p></li>
+<li><p><a class="reference external" href="https://docs.docker.com/get-docker/">Docker</a> for local image build and schema check.</p></li>
+<li><p>A <strong>private</strong> GitHub deploy repository (see <a class="reference internal" href="#azure-aca-requirements"><span class="std std-ref">Requirements for this deployment pattern</span></a>).</p></li>
+</ul>
+<p>Set these placeholders consistently in every command below:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Placeholder</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SUBSCRIPTION_ID</span></code></p></td>
+<td><p>Azure subscription GUID</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LOCATION</span></code></p></td>
+<td><p>Region (e.g. <code class="docutils literal notranslate"><span class="pre">eastus</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">RESOURCE_GROUP</span></code></p></td>
+<td><p>Resource group name (<code class="docutils literal notranslate"><span class="pre">RG</span></code> in some examples)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">WORKSPACE</span></code></p></td>
+<td><p>Log Analytics workspace name (e.g. <code class="docutils literal notranslate"><span class="pre">thaum-logs</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code></p></td>
+<td><p>Container Apps environment name (e.g. <code class="docutils literal notranslate"><span class="pre">thaum-env</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">APP_NAME</span></code></p></td>
+<td><p>Container App name</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">VAULT_NAME</span></code></p></td>
+<td><p>Key Vault name (globally unique)</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p><code class="docutils literal notranslate"><span class="pre">OWNER</span></code> / <code class="docutils literal notranslate"><span class="pre">REPO</span></code> | GitHub repository <code class="docutils literal notranslate"><span class="pre">owner/repo</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="step-1-resource-group-log-analytics-container-apps-environment">
+<span id="azure-aca-step1"></span><h2>Step 1 — Resource group, Log Analytics, Container Apps environment<a class="headerlink" href="#step-1-resource-group-log-analytics-container-apps-environment" title="Link to this heading">¶</a></h2>
+<p>Register resource providers and create the resource group.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-0">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>account<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--subscription<span class="w"> </span><span class="s2">&quot;SUBSCRIPTION_ID&quot;</span>
+
+az<span class="w"> </span>extension<span class="w"> </span>add<span class="w"> </span>--name<span class="w"> </span>containerapp<span class="w"> </span>--upgrade<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+
+az<span class="w"> </span>provider<span class="w"> </span>register<span class="w"> </span>--namespace<span class="w"> </span>Microsoft.App
+az<span class="w"> </span>provider<span class="w"> </span>register<span class="w"> </span>--namespace<span class="w"> </span>Microsoft.OperationalInsights
+az<span class="w"> </span>provider<span class="w"> </span>register<span class="w"> </span>--namespace<span class="w"> </span>Microsoft.KeyVault
+<span class="c1"># Optional: wait until Registered</span>
+az<span class="w"> </span>provider<span class="w"> </span>show<span class="w"> </span>--namespace<span class="w"> </span>Microsoft.KeyVault<span class="w"> </span>--query<span class="w"> </span>registrationState<span class="w"> </span>-o<span class="w"> </span>tsv
+
+az<span class="w"> </span>group<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>--location<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOCATION</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-1">
+PowerShell</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Set-AzContext</span> <span class="n">-Subscription</span> <span class="s2">&quot;SUBSCRIPTION_ID&quot;</span>
+
+<span class="nb">Register-AzResourceProvider</span> <span class="n">-ProviderNamespace</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">App</span>
+<span class="nb">Register-AzResourceProvider</span> <span class="n">-ProviderNamespace</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">OperationalInsights</span>
+<span class="nb">Register-AzResourceProvider</span> <span class="n">-ProviderNamespace</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">KeyVault</span>
+
+<span class="nb">New-AzResourceGroup</span> <span class="n">-Name</span> <span class="nv">$RESOURCE_GROUP</span> <span class="n">-Location</span> <span class="nv">$LOCATION</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create a <strong>Log Analytics workspace</strong>, then a Container Apps <strong>environment</strong> that sends logs to it (<code class="docutils literal notranslate"><span class="pre">--logs-workspace-id</span></code> is the workspace <strong>ARM resource ID</strong>).</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-2">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>monitor<span class="w"> </span>log-analytics<span class="w"> </span>workspace<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--workspace-name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$WORKSPACE</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--location<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOCATION</span><span class="s2">&quot;</span>
+
+<span class="nv">LOG_ANALYTICS_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>monitor<span class="w"> </span>log-analytics<span class="w"> </span>workspace<span class="w"> </span>show<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--workspace-name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$WORKSPACE</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
+
+az<span class="w"> </span>containerapp<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ENVIRONMENT</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--location<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOCATION</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--logs-workspace-id<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOG_ANALYTICS_ID</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-3">
+PowerShell</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">New-AzOperationalInsightsWorkspace</span> <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="p">`</span>
+  <span class="n">-Name</span> <span class="nv">$WORKSPACE</span> <span class="n">-Location</span> <span class="nv">$LOCATION</span> <span class="p">|</span> <span class="nb">Out-Null</span>
+
+<span class="nv">$customerId</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-AzOperationalInsightsWorkspace</span> <span class="p">`</span>
+  <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="n">-Name</span> <span class="nv">$WORKSPACE</span><span class="p">).</span><span class="n">CustomerId</span>
+<span class="nv">$sharedKey</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-AzOperationalInsightsWorkspaceSharedKey</span> <span class="p">`</span>
+  <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="n">-Name</span> <span class="nv">$WORKSPACE</span><span class="p">).</span><span class="n">PrimarySharedKey</span>
+
+<span class="nb">New-AzContainerAppManagedEnv</span> <span class="n">-Name</span> <span class="nv">$ENVIRONMENT</span> <span class="p">`</span>
+  <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="n">-Location</span> <span class="nv">$LOCATION</span> <span class="p">`</span>
+  <span class="n">-AppLogConfigurationDestination</span> <span class="s2">&quot;log-analytics&quot;</span> <span class="p">`</span>
+  <span class="n">-LogAnalyticConfigurationCustomerId</span> <span class="nv">$customerId</span> <span class="p">`</span>
+  <span class="n">-LogAnalyticConfigurationSharedKey</span> <span class="nv">$sharedKey</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-key-vault-and-user-assigned-managed-identity">
+<span id="azure-aca-keyvault-uami"></span><h2>Step 2 — Key Vault and user-assigned managed identity<a class="headerlink" href="#step-2-key-vault-and-user-assigned-managed-identity" title="Link to this heading">¶</a></h2>
+<p>Store Thaum credential <strong>values</strong> in <strong>Key Vault</strong>. The Container App resolves them at runtime via <code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code> and a <strong>user-assigned</strong> managed identity (UAMI). Microsoft recommends UAMI over system-assigned identity when attaching during or after create.</p>
+<section id="grant-operator-access-and-create-secrets">
+<h3>Grant operator access and create secrets<a class="headerlink" href="#grant-operator-access-and-create-secrets" title="Link to this heading">¶</a></h3>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-4">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>keyvault<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VAULT_NAME</span><span class="s2">&quot;</span><span class="w"> </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>--location<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOCATION</span><span class="s2">&quot;</span>
+
+<span class="nv">KV_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>keyvault<span class="w"> </span>show<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VAULT_NAME</span><span class="s2">&quot;</span><span class="w"> </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
+<span class="nv">MY_OID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>ad<span class="w"> </span>signed-in-user<span class="w"> </span>show<span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
+
+az<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--role<span class="w"> </span><span class="s2">&quot;Key Vault Secrets Officer&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--assignee-object-id<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$MY_OID</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--assignee-principal-type<span class="w"> </span>User<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--scope<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$KV_ID</span><span class="s2">&quot;</span>
+
+<span class="c1"># Prefer --file to avoid secrets on the command line; delete the file after use</span>
+az<span class="w"> </span>keyvault<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--vault-name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VAULT_NAME</span><span class="s2">&quot;</span><span class="w"> </span>--name<span class="w"> </span>webex-token-database<span class="w"> </span>--file<span class="w"> </span>./webex-token-database.txt
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-5">
+PowerShell</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">New-AzKeyVault</span> <span class="n">-Name</span> <span class="nv">$VAULT_NAME</span> <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="n">-Location</span> <span class="nv">$LOCATION</span>
+
+<span class="nv">$kv</span> <span class="p">=</span> <span class="nb">Get-AzKeyVault</span> <span class="n">-VaultName</span> <span class="nv">$VAULT_NAME</span> <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span>
+<span class="nv">$ctx</span> <span class="p">=</span> <span class="nb">Get-AzContext</span>
+<span class="nv">$myObjId</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-AzADUser</span> <span class="n">-UserPrincipalName</span> <span class="nv">$ctx</span><span class="p">.</span><span class="n">Account</span><span class="p">.</span><span class="n">Id</span><span class="p">).</span><span class="n">Id</span>
+
+<span class="nb">New-AzRoleAssignment</span> <span class="n">-ObjectId</span> <span class="nv">$myObjId</span> <span class="p">`</span>
+  <span class="n">-RoleDefinitionName</span> <span class="s2">&quot;Key Vault Secrets Officer&quot;</span> <span class="n">-Scope</span> <span class="nv">$kv</span><span class="p">.</span><span class="n">ResourceId</span>
+
+<span class="nv">$raw</span> <span class="p">=</span> <span class="nb">Get-Content</span> <span class="n">-Raw</span> <span class="s2">&quot;./webex-token-database.txt&quot;</span>
+<span class="nv">$sec</span> <span class="p">=</span> <span class="nb">ConvertTo-SecureString</span> <span class="nv">$raw</span> <span class="n">-AsPlainText</span> <span class="n">-Force</span>
+<span class="nb">Set-AzKeyVaultSecret</span> <span class="n">-VaultName</span> <span class="nv">$VAULT_NAME</span> <span class="n">-Name</span> <span class="s2">&quot;webex-token-database&quot;</span> <span class="n">-SecretValue</span> <span class="nv">$sec</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create the UAMI and grant <strong>Key Vault Secrets User</strong> on the vault:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-6">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">UAMI_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>identity<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;thaum-aca-secrets&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>--location<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOCATION</span><span class="s2">&quot;</span><span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
+<span class="nv">UAMI_PRINCIPAL</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>identity<span class="w"> </span>show<span class="w"> </span>--ids<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$UAMI_ID</span><span class="s2">&quot;</span><span class="w"> </span>--query<span class="w"> </span>principalId<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
+
+az<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--role<span class="w"> </span><span class="s2">&quot;Key Vault Secrets User&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--assignee-object-id<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$UAMI_PRINCIPAL</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--assignee-principal-type<span class="w"> </span>ServicePrincipal<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--scope<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$KV_ID</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-7" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-7">
+PowerShell</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$uami</span> <span class="p">=</span> <span class="nb">New-AzUserAssignedIdentity</span> <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="p">`</span>
+  <span class="n">-Name</span> <span class="s2">&quot;thaum-aca-secrets&quot;</span> <span class="n">-Location</span> <span class="nv">$LOCATION</span>
+<span class="nv">$UAMI_ID</span> <span class="p">=</span> <span class="nv">$uami</span><span class="p">.</span><span class="n">Id</span>
+<span class="nv">$uamiPrincipal</span> <span class="p">=</span> <span class="nv">$uami</span><span class="p">.</span><span class="n">PrincipalId</span>
+
+<span class="nb">New-AzRoleAssignment</span> <span class="n">-ObjectId</span> <span class="nv">$uamiPrincipal</span> <span class="p">`</span>
+  <span class="n">-RoleDefinitionName</span> <span class="s2">&quot;Key Vault Secrets User&quot;</span> <span class="n">-Scope</span> <span class="nv">$kv</span><span class="p">.</span><span class="n">ResourceId</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>``keyvaultref`` URI:</strong> <code class="docutils literal notranslate"><span class="pre">https://&lt;vault&gt;.vault.azure.net/secrets/&lt;name&gt;</span></code> (latest) or append <code class="docutils literal notranslate"><span class="pre">/&lt;version-id&gt;</span></code> to pin a version. Optional helper: <code class="docutils literal notranslate"><span class="pre">azure/github/scripts/keyvault-uri.ps1.example</span></code>.</p>
+</div>
+</section>
+</section>
+<section id="step-3-container-app-placeholder-secrets-thaum-image">
+<span id="azure-aca-container-app"></span><h2>Step 3 — Container App (placeholder → secrets → Thaum image)<a class="headerlink" href="#step-3-container-app-placeholder-secrets-thaum-image" title="Link to this heading">¶</a></h2>
+<p><strong>Private GHCR</strong> and <code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code> require a <strong>split</strong> flow:</p>
+<ol class="arabic simple">
+<li><p>Create the app on a <strong>public placeholder</strong> image.</p></li>
+<li><p>Attach the UAMI.</p></li>
+<li><p>Define ACA secrets pointing at Key Vault.</p></li>
+<li><p>Update to the real Thaum image, registry credentials, volume mount, and environment variables.</p></li>
+<li><p>Update ingress to port <strong>5165</strong> (separate from <code class="docutils literal notranslate"><span class="pre">containerapp</span> <span class="pre">update</span></code>).</p></li>
+</ol>
+<section id="placeholder-image-and-uami">
+<h3>3.1 — Placeholder image and UAMI<a class="headerlink" href="#placeholder-image-and-uami" title="Link to this heading">¶</a></h3>
+<p>Resolve the managed environment resource ID, then create the app and assign identity.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-8" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-8">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ENV_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>containerapp<span class="w"> </span>env<span class="w"> </span>show<span class="w"> </span>-g<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ENVIRONMENT</span><span class="s2">&quot;</span><span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
+<span class="nv">PLACEHOLDER</span><span class="o">=</span><span class="s2">&quot;mcr.microsoft.com/azuredocs/aci-helloworld:latest&quot;</span>
+
+az<span class="w"> </span>containerapp<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_NAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--environment<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ENV_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PLACEHOLDER</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ingress<span class="w"> </span>external<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--target-port<span class="w"> </span><span class="m">80</span>
+
+az<span class="w"> </span>containerapp<span class="w"> </span>identity<span class="w"> </span>assign<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_NAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--user-assigned<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$UAMI_ID</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-9" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-9">
+PowerShell</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$envId</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-AzContainerAppManagedEnv</span> <span class="p">`</span>
+  <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="n">-Name</span> <span class="nv">$ENVIRONMENT</span><span class="p">).</span><span class="n">Id</span>
+<span class="nv">$placeholder</span> <span class="p">=</span> <span class="s2">&quot;mcr.microsoft.com/azuredocs/aci-helloworld:latest&quot;</span>
+
+<span class="nb">New-AzContainerApp</span> <span class="n">-Name</span> <span class="nv">$APP_NAME</span> <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="p">`</span>
+  <span class="n">-ManagedEnvironmentId</span> <span class="nv">$envId</span> <span class="n">-Image</span> <span class="nv">$placeholder</span> <span class="p">`</span>
+  <span class="n">-IngressExternal</span> <span class="n">-TargetPort</span> <span class="n">80</span>
+
+<span class="nb">Update-AzContainerApp</span> <span class="n">-Name</span> <span class="nv">$APP_NAME</span> <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="p">`</span>
+  <span class="n">-IdentityType</span> <span class="s2">&quot;UserAssigned&quot;</span> <span class="n">-UserAssignedIdentity</span> <span class="p">@(</span><span class="nv">$UAMI_ID</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">New-AzContainerApp</span></code> / <code class="docutils literal notranslate"><span class="pre">Update-AzContainerApp</span></code> parameters differ in your <code class="docutils literal notranslate"><span class="pre">Az.App</span></code> version, run the Bash <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span></code> block; the ARM result is the same.</p>
+</div>
+</section>
+<section id="application-secrets-keyvaultref">
+<h3>3.2 — Application secrets (<code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code>)<a class="headerlink" href="#application-secrets-keyvaultref" title="Link to this heading">¶</a></h3>
+<p>Use <strong>Azure CLI</strong> for <code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code> quoting (works from Bash or PowerShell):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">SECRET_URI</span><span class="o">=</span><span class="s2">&quot;https://</span><span class="si">${</span><span class="nv">VAULT_NAME</span><span class="si">}</span><span class="s2">.vault.azure.net/secrets/webex-token-database&quot;</span>
+
+az<span class="w"> </span>containerapp<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_NAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--secrets<span class="w"> </span><span class="s2">&quot;webex-token-database=keyvaultref:</span><span class="si">${</span><span class="nv">SECRET_URI</span><span class="si">}</span><span class="s2">,identityref:</span><span class="si">${</span><span class="nv">UAMI_ID</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>Repeat with additional space-separated <code class="docutils literal notranslate"><span class="pre">--secrets</span> <span class="pre">&quot;name=...&quot;</span></code> pairs for each credential.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">thaum.toml</span></code>, reference <code class="docutils literal notranslate"><span class="pre">secret:webex-token-database</span></code> (matching the ACA secret name). See <a class="reference internal" href="#azure-aca-file-vs-env-secrets"><span class="std std-ref">File-mounted secrets vs environment variable secrets</span></a>.</p>
+</section>
+<section id="real-image-volume-mount-registry-ingress">
+<h3>3.3 — Real image, volume mount, registry, ingress<a class="headerlink" href="#real-image-volume-mount-registry-ingress" title="Link to this heading">¶</a></h3>
+<p>Mount secrets under <code class="docutils literal notranslate"><span class="pre">/run/secrets</span></code> and set <code class="docutils literal notranslate"><span class="pre">THAUM_CREDS_DIR</span></code> so the Thaum <code class="docutils literal notranslate"><span class="pre">entrypoint.sh</span></code> can copy files for user <code class="docutils literal notranslate"><span class="pre">thaum</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">update</span></code> does <strong>not</strong> accept <code class="docutils literal notranslate"><span class="pre">--target-port</span></code>. After switching from the placeholder (port 80) to Thaum (5165), run <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">ingress</span> <span class="pre">update</span></code> separately.</p>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-10" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-10">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">IMAGE</span><span class="o">=</span><span class="s2">&quot;ghcr.io/your-org/your-repo:your-tag&quot;</span>
+
+az<span class="w"> </span>containerapp<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_NAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$IMAGE</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--registry-server<span class="w"> </span>ghcr.io<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--registry-username<span class="w"> </span><span class="s2">&quot;MACHINE_USER_LOGIN&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--registry-password<span class="w"> </span><span class="s2">&quot;MACHINE_USER_READ_PACKAGES_PAT&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--secret-volume-mount<span class="w"> </span><span class="s2">&quot;/run/secrets&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set-env-vars<span class="w"> </span><span class="s2">&quot;THAUM_CREDS_DIR=/tmp/thaum-creds&quot;</span>
+
+az<span class="w"> </span>containerapp<span class="w"> </span>ingress<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_NAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--target-port<span class="w"> </span><span class="m">5165</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-11" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-11">
+PowerShell</label><div class="sd-tab-content docutils">
+<p>Run the same <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">update</span></code> and <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">ingress</span> <span class="pre">update</span></code> commands from the Bash tab (recommended). Alternatively, use your <code class="docutils literal notranslate"><span class="pre">Az.App</span></code> version’s ingress surface (<code class="docutils literal notranslate"><span class="pre">Get-Help</span> <span class="pre">Update-AzContainerApp</span></code>, <code class="docutils literal notranslate"><span class="pre">Get-Command</span> <span class="pre">*ContainerApp*Ingress*</span></code>) to set <strong>target port</strong> to <strong>5165</strong> after updating image, registry, and env/volume flags—do not pass target port on <code class="docutils literal notranslate"><span class="pre">Update-AzContainerApp</span></code> if the cmdlet rejects it.</p>
+</div>
+</div>
+<p>For bootstrap only, you may run <code class="docutils literal notranslate"><span class="pre">secret</span> <span class="pre">set</span></code> before this update and temporarily keep the placeholder image and port 80; the final revision must use Thaum on <strong>5165</strong>.</p>
+</section>
+<section id="ci-registry-credentials-vs-aca-pull-secret">
+<h3>3.4 — CI registry credentials vs ACA pull secret<a class="headerlink" href="#ci-registry-credentials-vs-aca-pull-secret" title="Link to this heading">¶</a></h3>
+<p>The PAT in <code class="docutils literal notranslate"><span class="pre">containerapp</span> <span class="pre">update</span></code> is the machine-user <code class="docutils literal notranslate"><span class="pre">read:packages</span></code> token (same class as <code class="docutils literal notranslate"><span class="pre">GHCR_PULL_PAT</span></code> in GitHub Actions). After CI is enabled, the <code class="docutils literal notranslate"><span class="pre">deploy_aca</span></code> job runs <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">registry</span> <span class="pre">set</span></code> on each deploy so ACA pull credentials stay aligned with the repository secret—see <a class="reference internal" href="#azure-aca-github-secrets"><span class="std std-ref">GitHub Actions workflow</span></a>.</p>
+</section>
+</section>
+<section id="step-4-logging-and-validation">
+<span id="azure-aca-logging"></span><h2>Step 4 — Logging and validation<a class="headerlink" href="#step-4-logging-and-validation" title="Link to this heading">¶</a></h2>
+<p>With the environment wired to Log Analytics in <a class="reference internal" href="#azure-aca-step1"><span class="std std-ref">Step 1 — Resource group, Log Analytics, Container Apps environment</span></a>, <strong>stdout/stderr</strong> and platform diagnostics flow to the workspace.</p>
+<section id="stream-logs-quick-check">
+<h3>Stream logs (quick check)<a class="headerlink" href="#stream-logs-quick-check" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>containerapp<span class="w"> </span>logs<span class="w"> </span>show<span class="w"> </span>-g<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_NAME</span><span class="s2">&quot;</span><span class="w"> </span>--follow
+</pre></div>
+</div>
+<p>In the Azure portal: Container App → <strong>Log stream</strong>, or <strong>Logs</strong> to query the workspace.</p>
+<p>Example Kusto query (table name can vary by subscription):</p>
+<div class="highlight-kusto notranslate"><div class="highlight"><pre><span></span><span class="n">ContainerAppConsoleLogs_CL</span>
+<span class="p">|</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">ContainerAppName_s</span><span class="w"> </span><span class="p">==</span><span class="w"> </span><span class="s">&quot;APP_NAME&quot;</span>
+<span class="p">|</span><span class="w"> </span><span class="k">sort</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">TimeGenerated</span><span class="w"> </span><span class="n">desc</span>
+<span class="p">|</span><span class="w"> </span><span class="k">take</span><span class="w"> </span><span class="mi">100</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">ContainerAppConsoleLogs_CL</span></code> is empty, open the workspace → <strong>Logs</strong> → schema browser and select the <strong>ContainerApp</strong> console table present in your subscription.</p>
+</section>
+<section id="sanity-checks">
+<h3>Sanity checks<a class="headerlink" href="#sanity-checks" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>containerapp<span class="w"> </span>show<span class="w"> </span>-g<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_NAME</span><span class="s2">&quot;</span><span class="w"> </span>-o<span class="w"> </span>table
+az<span class="w"> </span>containerapp<span class="w"> </span>revision<span class="w"> </span>list<span class="w"> </span>-g<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_NAME</span><span class="s2">&quot;</span><span class="w"> </span>-o<span class="w"> </span>table
+</pre></div>
+</div>
+</section>
+</section>
+<section id="health-checks">
+<h2>Health checks<a class="headerlink" href="#health-checks" title="Link to this heading">¶</a></h2>
+<p>Thaum exposes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/health</span></code> — liveness</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/ready</span></code> — database readiness</p></li>
+</ul>
+<p>Point Container Apps probes at <code class="docutils literal notranslate"><span class="pre">/ready</span></code> (or <code class="docutils literal notranslate"><span class="pre">/health</span></code>) on port <strong>5165</strong>.</p>
+</section>
+<section id="configuration-and-dockerfile">
+<h2>Configuration and Dockerfile<a class="headerlink" href="#configuration-and-dockerfile" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Start from the template <code class="docutils literal notranslate"><span class="pre">thaum.toml</span></code> or upstream examples; keep only what your organization needs.</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">[server].base_url</span></code> to the app FQDN, or omit it and rely on <code class="docutils literal notranslate"><span class="pre">WEBSITE_HOSTNAME</span></code> / <code class="docutils literal notranslate"><span class="pre">THAUM_BASE_URL</span></code> at runtime.</p></li>
+<li><p>Save as <code class="docutils literal notranslate"><span class="pre">thaum.toml</span></code> in the deploy repository; the Dockerfile must <code class="docutils literal notranslate"><span class="pre">COPY</span></code> it to <code class="docutils literal notranslate"><span class="pre">/etc/thaum/thaum.toml</span></code>.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">azure/github/Dockerfile.example</span></code>: pin <code class="docutils literal notranslate"><span class="pre">FROM</span></code> to a digest or tag; do not rely on <code class="docutils literal notranslate"><span class="pre">:latest</span></code> alone.</p></li>
+</ol>
+<p>Keep secrets out of Git—use <code class="docutils literal notranslate"><span class="pre">secret:&lt;name&gt;</span></code> with the volume mount, or <code class="docutils literal notranslate"><span class="pre">env:VAR</span></code> if you bind secrets with <code class="docutils literal notranslate"><span class="pre">secretref:</span></code> (see below).</p>
+<section id="schema-check-local-same-as-ci">
+<h3>Schema check (local, same as CI)<a class="headerlink" href="#schema-check-local-same-as-ci" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>thaum-local:test<span class="w"> </span>.
+
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--workdir<span class="w"> </span>/app<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--entrypoint<span class="w"> </span>python<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">WEBSITE_HOSTNAME</span><span class="o">=</span>schema-check.ci.local<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>thaum-local:test<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>scripts/python/thaum_config_check.py<span class="w"> </span>--schema-check<span class="w"> </span>-c<span class="w"> </span>/etc/thaum/thaum.toml
+</pre></div>
+</div>
+</section>
+</section>
+<section id="file-mounted-secrets-vs-environment-variable-secrets">
+<span id="azure-aca-file-vs-env-secrets"></span><h2>File-mounted secrets vs environment variable secrets<a class="headerlink" href="#file-mounted-secrets-vs-environment-variable-secrets" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt><strong>Files</strong> (<code class="docutils literal notranslate"><span class="pre">--secret-volume-mount</span> <span class="pre">&quot;/run/secrets&quot;</span></code>)</dt><dd><p>Each ACA secret appears as a file; TOML uses <code class="docutils literal notranslate"><span class="pre">secret:&lt;name&gt;</span></code>. Matches systemd-style <code class="docutils literal notranslate"><span class="pre">secret:</span></code> and keeps values out of the process environment.</p>
+</dd>
+<dt><strong>Environment</strong> (<code class="docutils literal notranslate"><span class="pre">secretref:</span></code>)</dt><dd><p>Omit the volume mount; on update use <code class="docutils literal notranslate"><span class="pre">--set-env-vars</span> <span class="pre">&quot;VARNAME=secretref:aca-secret-name&quot;</span></code>. In TOML use <code class="docutils literal notranslate"><span class="pre">env:VARNAME</span></code>. Anything that dumps the environment can expose values.</p>
+</dd>
+</dl>
+<p>Pick one style per secret and stay consistent.</p>
+</section>
+<section id="github-actions-workflow">
+<span id="azure-aca-github-secrets"></span><h2>GitHub Actions workflow<a class="headerlink" href="#github-actions-workflow" title="Link to this heading">¶</a></h2>
+<p>Two jobs in <code class="docutils literal notranslate"><span class="pre">deploy-aca.yml</span></code>:</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22.5%" />
+<col style="width: 77.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Job</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">build_push</span></code></p></td>
+<td><p>Build Dockerfile, <code class="docutils literal notranslate"><span class="pre">--schema-check</span></code>, push to <strong>GHCR</strong> (<code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code>, <code class="docutils literal notranslate"><span class="pre">packages:</span> <span class="pre">write</span></code>). No Azure credentials.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">deploy_aca</span></code></p></td>
+<td><p><strong>OIDC</strong> login, <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">registry</span> <span class="pre">set</span></code>, <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">update</span></code> to the commit SHA tag</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If the schema check fails, nothing is pushed and ACA is not updated.</p>
+<p><strong>Triggers:</strong> confirm in the YAML; <code class="docutils literal notranslate"><span class="pre">workflow_dispatch</span></code> is typical; <code class="docutils literal notranslate"><span class="pre">push</span></code> to <code class="docutils literal notranslate"><span class="pre">main</span></code> may be commented out—enable it if every merge should deploy.</p>
+<section id="tokens-github-token-vs-pat">
+<h3>Tokens: <code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code> vs PAT<a class="headerlink" href="#tokens-github-token-vs-pat" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 22.5%" />
+<col style="width: 42.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Scenario</p></th>
+<th class="head"><p>Credential</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CI pushes to GHCR</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code></p></td>
+<td><p>Requires <code class="docutils literal notranslate"><span class="pre">packages:</span> <span class="pre">write</span></code> in workflow</p></td>
+</tr>
+<tr class="row-odd"><td><p>Org blocks token push</p></td>
+<td><p>PAT + workflow change</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">write:packages</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>ACA pulls <strong>private</strong> GHCR</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GHCR_PULL_PAT</span></code> + <code class="docutils literal notranslate"><span class="pre">GHCR_PULL_USERNAME</span></code></p></td>
+<td><p>Machine user, <code class="docutils literal notranslate"><span class="pre">read:packages</span></code> only</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="repository-secrets-settings-secrets-and-variables-actions-secrets">
+<h3>Repository secrets (<strong>Settings → Secrets and variables → Actions → Secrets</strong>)<a class="headerlink" href="#repository-secrets-settings-secrets-and-variables-actions-secrets" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Secret</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AZURE_CLIENT_ID</span></code></p></td>
+<td><p>Entra app <strong>application (client) ID</strong> for OIDC</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AZURE_TENANT_ID</span></code></p></td>
+<td><p>Tenant ID</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AZURE_SUBSCRIPTION_ID</span></code></p></td>
+<td><p>Subscription ID</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GHCR_PULL_PAT</span></code></p></td>
+<td><p>Machine user PAT <code class="docutils literal notranslate"><span class="pre">read:packages</span></code> for <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">registry</span> <span class="pre">set</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="repository-variables-variables">
+<h3>Repository variables (<strong>Variables</strong>)<a class="headerlink" href="#repository-variables-variables" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 31.1%" />
+<col style="width: 13.3%" />
+<col style="width: 55.6%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Required</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AZURE_RESOURCE_GROUP</span></code></p></td>
+<td><p>Yes</p></td>
+<td><p>Resource group of the Container App</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AZURE_CONTAINERAPP_NAME</span></code></p></td>
+<td><p>Yes</p></td>
+<td><p>Container App name</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GHCR_PULL_USERNAME</span></code></p></td>
+<td><p>Yes for <code class="docutils literal notranslate"><span class="pre">deploy_aca</span></code></p></td>
+<td><p>Machine user login for registry <code class="docutils literal notranslate"><span class="pre">--username</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GHCR_IMAGE</span></code></p></td>
+<td><p>No</p></td>
+<td><p>Full image <strong>without tag</strong>; default <code class="docutils literal notranslate"><span class="pre">ghcr.io/&lt;lower(owner/repo)&gt;</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="azure-oidc-federated-identity">
+<span id="azure-aca-oidc"></span><h2>Azure OIDC (federated identity)<a class="headerlink" href="#azure-oidc-federated-identity" title="Link to this heading">¶</a></h2>
+<p>Trust GitHub Actions so <code class="docutils literal notranslate"><span class="pre">azure/login</span></code> receives tokens without an Entra client secret.</p>
+<section id="portal-summary">
+<h3>Portal (summary)<a class="headerlink" href="#portal-summary" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Entra ID → App registration → note <strong>Application (client) ID</strong> → <code class="docutils literal notranslate"><span class="pre">AZURE_CLIENT_ID</span></code>.</p></li>
+<li><p><strong>Certificates &amp; secrets → Federated credentials</strong> → Add:</p>
+<ul class="simple">
+<li><p><strong>Issuer:</strong> <code class="docutils literal notranslate"><span class="pre">https://token.actions.githubusercontent.com</span></code></p></li>
+<li><p><strong>Subject:</strong> e.g. <code class="docutils literal notranslate"><span class="pre">repo:OWNER/REPO:ref:refs/heads/main</span></code> (must match how you trigger <code class="docutils literal notranslate"><span class="pre">deploy_aca</span></code>)</p></li>
+<li><p><strong>Audience:</strong> <code class="docutils literal notranslate"><span class="pre">api://AzureADTokenExchange</span></code></p></li>
+</ul>
+</li>
+<li><p>Grant the app’s service principal rights on the resource group (below).</p></li>
+</ol>
+<p>Tutorials: <a class="reference external" href="https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure">Microsoft — GitHub OIDC</a>, <a class="reference external" href="https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure">GitHub Docs</a>.</p>
+</section>
+<section id="cli-provisioning">
+<h3>CLI provisioning<a class="headerlink" href="#cli-provisioning" title="Link to this heading">¶</a></h3>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-12" name="sd-tab-set-6" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-12">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">APP_DISPLAY_NAME</span><span class="o">=</span><span class="s2">&quot;gha-thaum-deploy&quot;</span>
+<span class="nv">CLIENT_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>ad<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>--display-name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_DISPLAY_NAME</span><span class="s2">&quot;</span><span class="w"> </span>--query<span class="w"> </span>appId<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
+<span class="nv">APP_OBJECT_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>ad<span class="w"> </span>app<span class="w"> </span>show<span class="w"> </span>--id<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CLIENT_ID</span><span class="s2">&quot;</span><span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
+
+az<span class="w"> </span>ad<span class="w"> </span>sp<span class="w"> </span>create<span class="w"> </span>--id<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CLIENT_ID</span><span class="s2">&quot;</span>
+
+<span class="nv">SUBJECT</span><span class="o">=</span><span class="s2">&quot;repo:OWNER/REPO:ref:refs/heads/main&quot;</span>
+
+az<span class="w"> </span>ad<span class="w"> </span>app<span class="w"> </span>federated-credential<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--id<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_OBJECT_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--parameters<span class="w"> </span><span class="s2">&quot;{</span>
+<span class="s2">    \&quot;name\&quot;: \&quot;github-main\&quot;,</span>
+<span class="s2">    \&quot;issuer\&quot;: \&quot;https://token.actions.githubusercontent.com\&quot;,</span>
+<span class="s2">    \&quot;subject\&quot;: \&quot;</span><span class="nv">$SUBJECT</span><span class="s2">\&quot;,</span>
+<span class="s2">    \&quot;audiences\&quot;: [\&quot;api://AzureADTokenExchange\&quot;]</span>
+<span class="s2">  }&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-13" name="sd-tab-set-6" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-13">
+PowerShell</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$app</span> <span class="p">=</span> <span class="nb">New-AzADApplication</span> <span class="n">-DisplayName</span> <span class="s2">&quot;gha-thaum-deploy&quot;</span>
+<span class="nb">New-AzADServicePrincipal</span> <span class="n">-ApplicationId</span> <span class="nv">$app</span><span class="p">.</span><span class="n">AppId</span>
+<span class="nv">$CLIENT_ID</span> <span class="p">=</span> <span class="nv">$app</span><span class="p">.</span><span class="n">AppId</span>
+
+<span class="nb">New-AzADAppFederatedCredential</span> <span class="p">`</span>
+  <span class="n">-ApplicationObjectId</span> <span class="nv">$app</span><span class="p">.</span><span class="n">Id</span> <span class="p">`</span>
+  <span class="n">-Issuer</span> <span class="s2">&quot;https://token.actions.githubusercontent.com&quot;</span> <span class="p">`</span>
+  <span class="n">-Subject</span> <span class="s2">&quot;repo:OWNER/REPO:ref:refs/heads/main&quot;</span> <span class="p">`</span>
+  <span class="n">-Audience</span> <span class="s2">&quot;api://AzureADTokenExchange&quot;</span> <span class="p">`</span>
+  <span class="n">-Name</span> <span class="s2">&quot;github-main&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">repo:OWNER/REPO:environment:NAME</span></code> if federated credentials bind to a GitHub Environment.</p>
+<p>Copy <code class="docutils literal notranslate"><span class="pre">CLIENT_ID</span></code> → <code class="docutils literal notranslate"><span class="pre">AZURE_CLIENT_ID</span></code>; tenant and subscription → <code class="docutils literal notranslate"><span class="pre">AZURE_TENANT_ID</span></code>, <code class="docutils literal notranslate"><span class="pre">AZURE_SUBSCRIPTION_ID</span></code>.</p>
+</section>
+</section>
+<section id="azure-role-assignment-deploy-principal">
+<h2>Azure role assignment (deploy principal)<a class="headerlink" href="#azure-role-assignment-deploy-principal" title="Link to this heading">¶</a></h2>
+<p>The automation principal needs permission for <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">update</span></code> and <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">registry</span> <span class="pre">set</span></code>.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-14" name="sd-tab-set-7" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-14">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--assignee<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CLIENT_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--role<span class="w"> </span>Contributor<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--scope<span class="w"> </span><span class="s2">&quot;/subscriptions/SUBSCRIPTION_ID/resourceGroups/</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-15" name="sd-tab-set-7" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-15">
+PowerShell</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$rgScope</span> <span class="p">=</span> <span class="s2">&quot;/subscriptions/SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP&quot;</span>
+<span class="nv">$deploySp</span> <span class="p">=</span> <span class="nb">Get-AzADServicePrincipal</span> <span class="n">-ApplicationId</span> <span class="nv">$CLIENT_ID</span>
+<span class="nb">New-AzRoleAssignment</span> <span class="n">-ObjectId</span> <span class="nv">$deploySp</span><span class="p">.</span><span class="n">Id</span> <span class="n">-RoleDefinitionName</span> <span class="s2">&quot;Contributor&quot;</span> <span class="n">-Scope</span> <span class="nv">$rgScope</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Prefer a narrower custom role if policy requires; <strong>Contributor</strong> on the resource group is a common starting point.</p>
+</section>
+<section id="ghcr-package-visibility">
+<h2>GHCR package visibility<a class="headerlink" href="#ghcr-package-visibility" title="Link to this heading">¶</a></h2>
+<p>Keep the GHCR package <strong>private</strong>. Set <code class="docutils literal notranslate"><span class="pre">GHCR_PULL_PAT</span></code> and <code class="docutils literal notranslate"><span class="pre">GHCR_PULL_USERNAME</span></code> before <code class="docutils literal notranslate"><span class="pre">deploy_aca</span></code>. Leave <code class="docutils literal notranslate"><span class="pre">packages:</span> <span class="pre">write</span></code> enabled on the workflow for pushes.</p>
+</section>
+<section id="first-time-validation">
+<h2>First-time validation<a class="headerlink" href="#first-time-validation" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Configure GitHub secrets and variables (including machine-user <code class="docutils literal notranslate"><span class="pre">GHCR_PULL_*</span></code>).</p></li>
+<li><p>Finish federated credential and RBAC (<a class="reference internal" href="#azure-aca-oidc"><span class="std std-ref">Azure OIDC (federated identity)</span></a>).</p></li>
+<li><p>Run <strong>Actions → Schema check and deploy to Azure Container Apps</strong> (enable deploy if using <code class="docutils literal notranslate"><span class="pre">workflow_dispatch</span></code>).</p></li>
+<li><p>Confirm: schema check passed, GHCR push OK, <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">update</span></code> OK, provisioning <strong>Succeeded</strong>, revisions as expected.</p></li>
+<li><p>Verify the GHCR SHA tag exists; the ACA revision shows the new image.</p></li>
+<li><p>Confirm logs in Log Analytics / <strong>Log stream</strong> (<a class="reference internal" href="#azure-aca-logging"><span class="std std-ref">Step 4 — Logging and validation</span></a>).</p></li>
+</ol>
+</section>
+<section id="optional-external-managed-postgres">
+<h2>Optional — external managed Postgres<a class="headerlink" href="#optional-external-managed-postgres" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Provision managed Postgres and a database/user for Thaum.</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">THAUM_EXTERNAL_DB=true</span></code> on the Container App.</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">[server.database].db_url</span></code> in <code class="docutils literal notranslate"><span class="pre">thaum.toml</span></code>; supply passwords via Key Vault + <code class="docutils literal notranslate"><span class="pre">secret:</span></code> / <code class="docutils literal notranslate"><span class="pre">env:</span></code>.</p></li>
+<li><p>Redeploy. The container runs <strong>Gunicorn only</strong> (no bundled Postgres).</p></li>
+</ol>
+</section>
+<section id="appendix-acr-alternate-workflow-not-the-default">
+<h2>Appendix — ACR alternate workflow (not the default)<a class="headerlink" href="#appendix-acr-alternate-workflow-not-the-default" title="Link to this heading">¶</a></h2>
+<p>The default CI path is <strong>GHCR</strong> + <code class="docutils literal notranslate"><span class="pre">deploy-aca.yml</span></code>. To use <strong>Azure Container Registry</strong> instead, provision an ACR, adapt registry credentials on the Container App, and use an ACR-oriented pipeline such as <code class="docutils literal notranslate"><span class="pre">azure/github/deploy.yml.example</span></code> (build → schema-check → push ACR → update), aligned with Microsoft’s <a class="reference external" href="https://learn.microsoft.com/en-us/azure/container-apps/tutorial-code-to-cloud?tabs=bash%2Ccsharp&amp;pivots=acr-remote">tutorial</a>. Application secrets remain in Key Vault as in <a class="reference internal" href="#azure-aca-keyvault-uami"><span class="std std-ref">Step 2 — Key Vault and user-assigned managed identity</span></a> and <a class="reference internal" href="#azure-aca-container-app"><span class="std std-ref">Step 3 — Container App (placeholder → secrets → Thaum image)</span></a>.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="../../index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Gemstone Software
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Azure Container Apps Quickstart</a><ul>
+<li><a class="reference internal" href="#requirements-for-this-deployment-pattern">Requirements for this deployment pattern</a></li>
+<li><a class="reference internal" href="#what-you-get">What you get</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#step-1-resource-group-log-analytics-container-apps-environment">Step 1 — Resource group, Log Analytics, Container Apps environment</a></li>
+<li><a class="reference internal" href="#step-2-key-vault-and-user-assigned-managed-identity">Step 2 — Key Vault and user-assigned managed identity</a><ul>
+<li><a class="reference internal" href="#grant-operator-access-and-create-secrets">Grant operator access and create secrets</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#step-3-container-app-placeholder-secrets-thaum-image">Step 3 — Container App (placeholder → secrets → Thaum image)</a><ul>
+<li><a class="reference internal" href="#placeholder-image-and-uami">3.1 — Placeholder image and UAMI</a></li>
+<li><a class="reference internal" href="#application-secrets-keyvaultref">3.2 — Application secrets (<code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code>)</a></li>
+<li><a class="reference internal" href="#real-image-volume-mount-registry-ingress">3.3 — Real image, volume mount, registry, ingress</a></li>
+<li><a class="reference internal" href="#ci-registry-credentials-vs-aca-pull-secret">3.4 — CI registry credentials vs ACA pull secret</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#step-4-logging-and-validation">Step 4 — Logging and validation</a><ul>
+<li><a class="reference internal" href="#stream-logs-quick-check">Stream logs (quick check)</a></li>
+<li><a class="reference internal" href="#sanity-checks">Sanity checks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#health-checks">Health checks</a></li>
+<li><a class="reference internal" href="#configuration-and-dockerfile">Configuration and Dockerfile</a><ul>
+<li><a class="reference internal" href="#schema-check-local-same-as-ci">Schema check (local, same as CI)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#file-mounted-secrets-vs-environment-variable-secrets">File-mounted secrets vs environment variable secrets</a></li>
+<li><a class="reference internal" href="#github-actions-workflow">GitHub Actions workflow</a><ul>
+<li><a class="reference internal" href="#tokens-github-token-vs-pat">Tokens: <code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code> vs PAT</a></li>
+<li><a class="reference internal" href="#repository-secrets-settings-secrets-and-variables-actions-secrets">Repository secrets (<strong>Settings → Secrets and variables → Actions → Secrets</strong>)</a></li>
+<li><a class="reference internal" href="#repository-variables-variables">Repository variables (<strong>Variables</strong>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#azure-oidc-federated-identity">Azure OIDC (federated identity)</a><ul>
+<li><a class="reference internal" href="#portal-summary">Portal (summary)</a></li>
+<li><a class="reference internal" href="#cli-provisioning">CLI provisioning</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#azure-role-assignment-deploy-principal">Azure role assignment (deploy principal)</a></li>
+<li><a class="reference internal" href="#ghcr-package-visibility">GHCR package visibility</a></li>
+<li><a class="reference internal" href="#first-time-validation">First-time validation</a></li>
+<li><a class="reference internal" href="#optional-external-managed-postgres">Optional — external managed Postgres</a></li>
+<li><a class="reference internal" href="#appendix-acr-alternate-workflow-not-the-default">Appendix — ACR alternate workflow (not the default)</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>
