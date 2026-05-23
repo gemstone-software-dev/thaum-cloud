@@ -1,0 +1,179 @@
+# Deploy Thaum image to Azure Container Apps (GHCR + OIDC).
+#
+# Two jobs: (1) build_push — image build, schema gate, GHCR push (no Azure). (2) deploy_aca —
+# Azure OIDC and Container App update. Push to main runs both; workflow_dispatch defaults to
+# build/push only unless you enable the "Deploy to Azure Container Apps" input.
+#
+# Required repository secrets (deploy_aca — Azure OIDC + GHCR pull on ACA):
+#   AZURE_CLIENT_ID       — Entra app (service principal) application ID
+#   AZURE_TENANT_ID       — Directory (tenant) ID
+#   AZURE_SUBSCRIPTION_ID — Azure subscription ID
+#   GHCR_PULL_PAT         — Machine user PAT, read:packages (ACA pulls private GHCR)
+#
+# Required repository variables (Settings → Secrets and variables → Actions → Variables):
+#   AZURE_RESOURCE_GROUP    — Resource group containing the Container App
+#   AZURE_CONTAINERAPP_NAME — Name of the existing Container App to update
+#   GHCR_PULL_USERNAME      — GitHub login of the machine user that owns GHCR_PULL_PAT (ACA pull)
+#
+# Optional repository variable:
+#   GHCR_IMAGE — Full image path without tag (e.g. ghcr.io/myorg/thaum-cloud). If unset,
+#                defaults to ghcr.io/<lowercase owner/repo> from github.repository.
+#
+# One-time Azure: federated identity credential for this repo/workflow, and grant the
+# service principal permission to update the Container App (e.g. Contributor on the RG).
+
+name: Schema check and deploy to Azure Container Apps
+
+on:
+  # Uncomment when you want every push to main to build, gate, push, and deploy.
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy to Azure Container Apps (OIDC + az containerapp update)
+        type: boolean
+        default: false
+
+concurrency:
+  group: aca-deploy-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  id-token: write
+  contents: read
+  packages: write
+
+jobs:
+  build_push:
+    runs-on: ubuntu-latest
+    outputs:
+      image_name: ${{ steps.image.outputs.name }}
+      image_tag: ${{ github.sha }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Resolve GHCR image name
+        id: image
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -n "${{ vars.GHCR_IMAGE }}" ]; then
+            echo "name=${{ vars.GHCR_IMAGE }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build container image
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build \
+            -t "${{ steps.image.outputs.name }}:${{ github.sha }}" \
+            -t "${{ steps.image.outputs.name }}:build" \
+            .
+
+      - name: Schema check (blocking gate)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # When [server].base_url is omitted, Thaum derives a URL from cloud env (e.g. Azure WEBSITE_HOSTNAME). ACA provides that at runtime; CI has none—use a dummy host for --schema-check only.
+          docker run --rm \
+            --workdir /app \
+            --entrypoint python \
+            -e WEBSITE_HOSTNAME=schema-check.ci.local \
+            "${{ steps.image.outputs.name }}:build" \
+            scripts/python/thaum_config_check.py --schema-check -c /etc/thaum/thaum.toml
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v4.2.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push image to GHCR
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker push "${{ steps.image.outputs.name }}:${{ github.sha }}"
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            docker tag "${{ steps.image.outputs.name }}:${{ github.sha }}" "${{ steps.image.outputs.name }}:latest"
+            docker push "${{ steps.image.outputs.name }}:latest"
+          fi
+
+  deploy_aca:
+    needs: build_push
+    if: success() && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy == true))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure login (OIDC)
+        uses: azure/login@v3.0.0
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Ensure Azure Container Apps CLI extension
+        shell: bash
+        run: az extension add --name containerapp --upgrade
+
+      - name: Configure GHCR pull credentials on Container App
+        shell: bash
+        env:
+          GHCR_PULL_PAT: ${{ secrets.GHCR_PULL_PAT }}
+          GHCR_PULL_USERNAME: ${{ vars.GHCR_PULL_USERNAME }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GHCR_PULL_PAT:-}" ]; then
+            echo "GHCR_PULL_PAT is not set." >&2
+            exit 1
+          fi
+          if [ -z "${GHCR_PULL_USERNAME:-}" ]; then
+            echo "GHCR_PULL_USERNAME repository variable is not set." >&2
+            exit 1
+          fi
+          az containerapp registry set \
+            --name "${{ vars.AZURE_CONTAINERAPP_NAME }}" \
+            --resource-group "${{ vars.AZURE_RESOURCE_GROUP }}" \
+            --server ghcr.io \
+            --username "$GHCR_PULL_USERNAME" \
+            --password "$GHCR_PULL_PAT"
+
+      - name: Update Container App image
+        shell: bash
+        run: |
+          set -euo pipefail
+          az containerapp update \
+            --name "${{ vars.AZURE_CONTAINERAPP_NAME }}" \
+            --resource-group "${{ vars.AZURE_RESOURCE_GROUP }}" \
+            --image "${{ needs.build_push.outputs.image_name }}:${{ needs.build_push.outputs.image_tag }}"
+
+      - name: Verify provisioning and revisions
+        shell: bash
+        run: |
+          set -euo pipefail
+          APP="${{ vars.AZURE_CONTAINERAPP_NAME }}"
+          RG="${{ vars.AZURE_RESOURCE_GROUP }}"
+          for i in $(seq 1 30); do
+            STATE=$(az containerapp show -g "$RG" -n "$APP" --query "properties.provisioningState" -o tsv)
+            echo "Provisioning state (attempt $i): $STATE"
+            if [ "$STATE" = "Succeeded" ]; then
+              break
+            fi
+            if [ "$STATE" = "Failed" ]; then
+              echo "Container App provisioning failed." >&2
+              exit 1
+            fi
+            sleep 10
+          done
+          if [ "${STATE:-}" != "Succeeded" ]; then
+            echo "Timed out waiting for provisioningState=Succeeded (last: ${STATE:-unknown})." >&2
+            exit 1
+          fi
+          FQDN=$(az containerapp show -g "$RG" -n "$APP" --query "properties.configuration.ingress.fqdn" -o tsv 2>/dev/null || true)
+          echo "Ingress FQDN: ${FQDN:-n/a}"
+          echo "Active revisions:"
+          az containerapp revision list -g "$RG" -n "$APP" --query "[?properties.active==true].[name,properties.createdTime,properties.trafficWeight]" -o table
