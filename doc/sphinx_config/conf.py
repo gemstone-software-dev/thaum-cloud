@@ -66,6 +66,7 @@ html_theme_options = {
         "color-sidebar-background": "#eaf5ef",
         "color-table-header-background": "var(--color-sidebar-background)",
         "color-code-background": "#eef0f3",
+        "color-highlight-on-target": "#FDEFEB",
     },
     "dark_css_variables": {
         "font-stack": '"Open Sans", ui-sans-serif, system-ui, sans-serif',
@@ -73,6 +74,7 @@ html_theme_options = {
         "color-thaum-heading-border": "#5cb87a",
         "color-sidebar-background": "#0d1a12",
         "color-table-header-background": "#15241b",
+        "color-highlight-on-target": "#201A19",
     },
 }
 
