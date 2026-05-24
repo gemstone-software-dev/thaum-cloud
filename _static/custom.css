@@ -111,6 +111,29 @@ article#furo-main-content h1 {
   background-color: var(--color-code-background) !important;
 }
 
+/* sphinx-copybutton: match Furo light/dark */
+div.highlight {
+  position: relative;
+}
+
+button.copybtn {
+  opacity: 0.5;
+  border: 1px solid var(--color-background-border);
+  background: var(--color-background-primary);
+  color: var(--color-foreground-primary);
+  border-radius: 3px;
+}
+
+button.copybtn:hover {
+  opacity: 1;
+}
+
+button.copybtn.copybtn-success {
+  opacity: 1;
+  border-color: var(--color-thaum-heading-border);
+  color: var(--color-thaum-heading-border);
+}
+
 
 article#furo-main-content h2 {
   font-size: 1.75rem !important;
