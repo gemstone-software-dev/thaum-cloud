@@ -244,6 +244,7 @@ Grant operator access and create secrets
 
          # Prefer --file to avoid secrets on the command line; delete the file after use
          az keyvault secret set --vault-name "$VAULT_NAME" --name webex-token-database --file ./webex-token-database.txt
+         az keyvault secret set --vault-name "$VAULT_NAME" --name webex-token-system --file ./webex-token-system.txt
 
    .. tab-item:: PowerShell
       :sync: powershell
@@ -262,6 +263,10 @@ Grant operator access and create secrets
          $raw = Get-Content -Raw "./webex-token-database.txt"
          $sec = ConvertTo-SecureString $raw -AsPlainText -Force
          Set-AzKeyVaultSecret -VaultName $VAULT_NAME -Name "webex-token-database" -SecretValue $sec
+
+         $rawSys = Get-Content -Raw "./webex-token-system.txt"
+         $secSys = ConvertTo-SecureString $rawSys -AsPlainText -Force
+         Set-AzKeyVaultSecret -VaultName $VAULT_NAME -Name "webex-token-system" -SecretValue $secSys
 
 
 Create the UAMI and grant **Key Vault Secrets User** on the vault:
@@ -369,20 +374,44 @@ Resolve the managed environment resource ID, then create the app and assign iden
 3.2 — Application secrets (``keyvaultref``)
 --------------------------------------------
 
-Use **Azure CLI** for ``keyvaultref`` quoting (works from Bash or PowerShell):
+Use **Azure CLI** for ``keyvaultref`` quoting (Bash or PowerShell tabs below). Define every ACA secret on **one** ``az containerapp secret set`` invocation: a **single** ``--secrets`` argument whose value is a **space-separated** list of ``name=keyvaultref:...,identityref:...`` entries. Quote each entry (commas appear inside ``keyvaultref`` values). Do **not** pass ``--secrets`` more than once on the same command.
 
-.. code-block:: bash
+To add credentials later you may run ``secret set`` again, but the usual pattern is one command with all secrets you need for the revision.
 
-   SECRET_URI="https://${VAULT_NAME}.vault.azure.net/secrets/webex-token-database"
+.. tab-set::
+   :sync-group: aca-shell
 
-   az containerapp secret set \
-     --name "$APP_NAME" \
-     --resource-group "$RESOURCE_GROUP" \
-     --secrets "webex-token-database=keyvaultref:${SECRET_URI},identityref:${UAMI_ID}"
+   .. tab-item:: Bash
+      :sync: bash
 
-Repeat with additional space-separated ``--secrets "name=..."`` pairs for each credential.
+      .. code-block:: bash
 
-In ``thaum.toml``, reference ``secret:webex-token-database`` (matching the ACA secret name). See :ref:`azure-aca-file-vs-env-secrets`.
+         SECRET_URI_DB="https://${VAULT_NAME}.vault.azure.net/secrets/webex-token-database"
+         SECRET_URI_SYS="https://${VAULT_NAME}.vault.azure.net/secrets/webex-token-system"
+
+         az containerapp secret set \
+           --name "$APP_NAME" \
+           --resource-group "$RESOURCE_GROUP" \
+           --secrets \
+             "webex-token-database=keyvaultref:${SECRET_URI_DB},identityref:${UAMI_ID}" \
+             "webex-token-system=keyvaultref:${SECRET_URI_SYS},identityref:${UAMI_ID}"
+
+   .. tab-item:: PowerShell
+      :sync: powershell
+
+      .. code-block:: powershell
+
+         $secretUriDb = "https://$VAULT_NAME.vault.azure.net/secrets/webex-token-database"
+         $secretUriSys = "https://$VAULT_NAME.vault.azure.net/secrets/webex-token-system"
+
+         az containerapp secret set `
+           --name $APP_NAME `
+           --resource-group $RESOURCE_GROUP `
+           --secrets `
+             "webex-token-database=keyvaultref:${secretUriDb},identityref:${UAMI_ID}" `
+             "webex-token-system=keyvaultref:${secretUriSys},identityref:${UAMI_ID}"
+
+In ``thaum.toml``, reference ``secret:webex-token-database`` and ``secret:webex-token-system`` (matching the ACA secret names). See :ref:`azure-aca-file-vs-env-secrets`.
 
 
 3.3 — Real image, volume mount, registry, ingress
