@@ -28,6 +28,7 @@
   --color-sidebar-background: #eaf5ef;
   --color-table-header-background: var(--color-sidebar-background);
   --color-code-background: #eef0f3;
+  --color-highlight-on-target: #FDEFEB;
   
   }
   @media not print {
@@ -39,6 +40,7 @@
   --color-thaum-heading-border: #5cb87a;
   --color-sidebar-background: #0d1a12;
   --color-table-header-background: #15241b;
+  --color-highlight-on-target: #201A19;
   
     }
     @media (prefers-color-scheme: dark) {
@@ -50,6 +52,7 @@
   --color-thaum-heading-border: #5cb87a;
   --color-sidebar-background: #0d1a12;
   --color-table-header-background: #15241b;
+  --color-highlight-on-target: #201A19;
   
       }
     }
@@ -700,7 +703,23 @@ az<span class="w"> </span>containerapp<span class="w"> </span>ingress<span class
 <input id="sd-tab-item-17" name="sd-tab-set-8" type="radio">
 <label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-17">
 PowerShell</label><div class="sd-tab-content docutils">
-<p>Run the same <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">update</span></code> and <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">ingress</span> <span class="pre">update</span></code> commands from the Bash tab (recommended). Alternatively, use your <code class="docutils literal notranslate"><span class="pre">Az.App</span></code> version’s ingress surface (<code class="docutils literal notranslate"><span class="pre">Get-Help</span> <span class="pre">Update-AzContainerApp</span></code>, <code class="docutils literal notranslate"><span class="pre">Get-Command</span> <span class="pre">*ContainerApp*Ingress*</span></code>) to set <strong>target port</strong> to <strong>5165</strong> after updating image, registry, and env/volume flags—do not pass target port on <code class="docutils literal notranslate"><span class="pre">Update-AzContainerApp</span></code> if the cmdlet rejects it.</p>
+<p><strong>Az.App</strong> does not currently implement <code class="docutils literal notranslate"><span class="pre">containerapp</span> <span class="pre">update</span></code> with private registry credentials, <code class="docutils literal notranslate"><span class="pre">--secret-volume-mount</span></code>, and the related flags used below. Run <strong>Azure CLI</strong> from PowerShell (<code class="docutils literal notranslate"><span class="pre">az</span></code> installed and logged in; variables from the tab above):</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">az</span> <span class="n">containerapp</span> <span class="n">update</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-name</span> <span class="nv">$APP_NAME</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-resource-group</span> <span class="nv">$RESOURCE_GROUP</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-image</span> <span class="nv">$IMAGE</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-registry-server</span> <span class="n">ghcr</span><span class="p">.</span><span class="n">io</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-registry-username</span> <span class="nv">$GHCR_PULL_USERNAME</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-registry-password</span> <span class="nv">$GHCR_PULL_PAT</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-secret-volume-mount</span> <span class="s2">&quot;/run/secrets&quot;</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-set-env-vars</span> <span class="s2">&quot;THAUM_CREDS_DIR=/tmp/thaum-creds&quot;</span>
+
+<span class="n">az</span> <span class="n">containerapp</span> <span class="n">ingress</span> <span class="n">update</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-name</span> <span class="nv">$APP_NAME</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-resource-group</span> <span class="nv">$RESOURCE_GROUP</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-target-port</span> <span class="n">5165</span>
+</pre></div>
+</div>
 </div>
 </div>
 <p>For bootstrap only, you may run <code class="docutils literal notranslate"><span class="pre">secret</span> <span class="pre">set</span></code> before this update and temporarily keep the placeholder image and port 80; the final revision must use Thaum on <strong>5165</strong>.</p>
