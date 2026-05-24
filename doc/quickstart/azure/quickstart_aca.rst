@@ -472,7 +472,24 @@ Set deploy-specific variables (image and GHCR pull credentials for ACA). Export 
    .. tab-item:: PowerShell
       :sync: powershell
 
-      Run the same ``az containerapp update`` and ``az containerapp ingress update`` commands from the Bash tab (recommended). Alternatively, use your ``Az.App`` version’s ingress surface (``Get-Help Update-AzContainerApp``, ``Get-Command *ContainerApp*Ingress*``) to set **target port** to **5165** after updating image, registry, and env/volume flags—do not pass target port on ``Update-AzContainerApp`` if the cmdlet rejects it.
+      **Az.App** does not currently implement ``containerapp update`` with private registry credentials, ``--secret-volume-mount``, and the related flags used below. Run **Azure CLI** from PowerShell (``az`` installed and logged in; variables from the tab above):
+
+      .. code-block:: powershell
+
+         az containerapp update `
+           --name $APP_NAME `
+           --resource-group $RESOURCE_GROUP `
+           --image $IMAGE `
+           --registry-server ghcr.io `
+           --registry-username $GHCR_PULL_USERNAME `
+           --registry-password $GHCR_PULL_PAT `
+           --secret-volume-mount "/run/secrets" `
+           --set-env-vars "THAUM_CREDS_DIR=/tmp/thaum-creds"
+
+         az containerapp ingress update `
+           --name $APP_NAME `
+           --resource-group $RESOURCE_GROUP `
+           --target-port 5165
 
 For bootstrap only, you may run ``secret set`` before this update and temporarily keep the placeholder image and port 80; the final revision must use Thaum on **5165**.
 
