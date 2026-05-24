@@ -347,13 +347,53 @@
 </tbody>
 </table>
 </div>
+<p>Concrete example values are in <strong>Define variables</strong> below (set once per shell session before Step 1).</p>
+<section id="define-variables">
+<h3>Define variables<a class="headerlink" href="#define-variables" title="Link to this heading">¶</a></h3>
+<p>Set these in your shell before running the provisioning commands. Use your subscription GUID (<code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">account</span> <span class="pre">show</span> <span class="pre">--query</span> <span class="pre">id</span> <span class="pre">-o</span> <span class="pre">tsv</span></code>) and replace example names where noted.</p>
+<p><strong>``VAULT_NAME``</strong> must be <strong>globally unique</strong> across Azure—append your organization id, environment name, or random characters (for example <code class="docutils literal notranslate"><span class="pre">a1b2</span></code>); do not reuse the doc literals if the name is already taken.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-0">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">SUBSCRIPTION_ID</span><span class="o">=</span><span class="s2">&quot;&lt;your-subscription-guid&gt;&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LOCATION</span><span class="o">=</span><span class="s2">&quot;eastus&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">RESOURCE_GROUP</span><span class="o">=</span><span class="s2">&quot;thaum-prod-rg&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">WORKSPACE</span><span class="o">=</span><span class="s2">&quot;thaum-prod-logs&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ENVIRONMENT</span><span class="o">=</span><span class="s2">&quot;thaum-prod-env&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">APP_NAME</span><span class="o">=</span><span class="s2">&quot;thaum-prod&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">VAULT_NAME</span><span class="o">=</span><span class="s2">&quot;thaum-prod-kv-a1b2&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">UAMI_NAME</span><span class="o">=</span><span class="s2">&quot;thaum-prod-secrets&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OWNER</span><span class="o">=</span><span class="s2">&quot;your-org&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">REPO</span><span class="o">=</span><span class="s2">&quot;your-deploy-repo&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-1">
+PowerShell</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$SUBSCRIPTION_ID</span> <span class="p">=</span> <span class="s2">&quot;&lt;your-subscription-guid&gt;&quot;</span>
+<span class="nv">$LOCATION</span>         <span class="p">=</span> <span class="s2">&quot;eastus&quot;</span>
+<span class="nv">$RESOURCE_GROUP</span>   <span class="p">=</span> <span class="s2">&quot;thaum-prod-rg&quot;</span>
+<span class="nv">$WORKSPACE</span>        <span class="p">=</span> <span class="s2">&quot;thaum-prod-logs&quot;</span>
+<span class="nv">$ENVIRONMENT</span>      <span class="p">=</span> <span class="s2">&quot;thaum-prod-env&quot;</span>
+<span class="nv">$APP_NAME</span>         <span class="p">=</span> <span class="s2">&quot;thaum-prod&quot;</span>
+<span class="nv">$VAULT_NAME</span>       <span class="p">=</span> <span class="s2">&quot;thaum-prod-kv-a1b2&quot;</span>
+<span class="nv">$UAMI_NAME</span>        <span class="p">=</span> <span class="s2">&quot;thaum-prod-secrets&quot;</span>
+<span class="nv">$OWNER</span>            <span class="p">=</span> <span class="s2">&quot;your-org&quot;</span>
+<span class="nv">$REPO</span>             <span class="p">=</span> <span class="s2">&quot;your-deploy-repo&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="step-1-resource-group-log-analytics-container-apps-environment">
 <span id="azure-aca-step1"></span><h2>Step 1 — Resource group, Log Analytics, Container Apps environment<a class="headerlink" href="#step-1-resource-group-log-analytics-container-apps-environment" title="Link to this heading">¶</a></h2>
 <p>Register resource providers and create the resource group.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-0">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-2">
 Bash</label><div class="sd-tab-content docutils">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>account<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--subscription<span class="w"> </span><span class="s2">&quot;SUBSCRIPTION_ID&quot;</span>
 
@@ -369,8 +409,8 @@ az<span class="w"> </span>group<span class="w"> </span>create<span class="w"> </
 </pre></div>
 </div>
 </div>
-<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-1">
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-3">
 PowerShell</label><div class="sd-tab-content docutils">
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Set-AzContext</span> <span class="n">-Subscription</span> <span class="s2">&quot;SUBSCRIPTION_ID&quot;</span>
 
@@ -385,8 +425,8 @@ PowerShell</label><div class="sd-tab-content docutils">
 </div>
 <p>Create a <strong>Log Analytics workspace</strong>, then a Container Apps <strong>environment</strong> that sends logs to it (<code class="docutils literal notranslate"><span class="pre">--logs-workspace-id</span></code> is the workspace <strong>ARM resource ID</strong>).</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-2">
+<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-4">
 Bash</label><div class="sd-tab-content docutils">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>monitor<span class="w"> </span>log-analytics<span class="w"> </span>workspace<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -406,8 +446,8 @@ az<span class="w"> </span>containerapp<span class="w"> </span>env<span class="w"
 </pre></div>
 </div>
 </div>
-<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-3">
+<input id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-5">
 PowerShell</label><div class="sd-tab-content docutils">
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">New-AzOperationalInsightsWorkspace</span> <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="p">`</span>
   <span class="n">-Name</span> <span class="nv">$WORKSPACE</span> <span class="n">-Location</span> <span class="nv">$LOCATION</span> <span class="p">|</span> <span class="nb">Out-Null</span>
@@ -433,8 +473,8 @@ PowerShell</label><div class="sd-tab-content docutils">
 <section id="grant-operator-access-and-create-secrets">
 <h3>Grant operator access and create secrets<a class="headerlink" href="#grant-operator-access-and-create-secrets" title="Link to this heading">¶</a></h3>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-2" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-4">
+<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-6">
 Bash</label><div class="sd-tab-content docutils">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>keyvault<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VAULT_NAME</span><span class="s2">&quot;</span><span class="w"> </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>--location<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOCATION</span><span class="s2">&quot;</span>
 
@@ -449,11 +489,12 @@ az<span class="w"> </span>role<span class="w"> </span>assignment<span class="w">
 
 <span class="c1"># Prefer --file to avoid secrets on the command line; delete the file after use</span>
 az<span class="w"> </span>keyvault<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--vault-name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VAULT_NAME</span><span class="s2">&quot;</span><span class="w"> </span>--name<span class="w"> </span>webex-token-database<span class="w"> </span>--file<span class="w"> </span>./webex-token-database.txt
+az<span class="w"> </span>keyvault<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span>--vault-name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VAULT_NAME</span><span class="s2">&quot;</span><span class="w"> </span>--name<span class="w"> </span>webex-token-system<span class="w"> </span>--file<span class="w"> </span>./webex-token-system.txt
 </pre></div>
 </div>
 </div>
-<input id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-5">
+<input id="sd-tab-item-7" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-7">
 PowerShell</label><div class="sd-tab-content docutils">
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">New-AzKeyVault</span> <span class="n">-Name</span> <span class="nv">$VAULT_NAME</span> <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="n">-Location</span> <span class="nv">$LOCATION</span>
 
@@ -467,16 +508,20 @@ PowerShell</label><div class="sd-tab-content docutils">
 <span class="nv">$raw</span> <span class="p">=</span> <span class="nb">Get-Content</span> <span class="n">-Raw</span> <span class="s2">&quot;./webex-token-database.txt&quot;</span>
 <span class="nv">$sec</span> <span class="p">=</span> <span class="nb">ConvertTo-SecureString</span> <span class="nv">$raw</span> <span class="n">-AsPlainText</span> <span class="n">-Force</span>
 <span class="nb">Set-AzKeyVaultSecret</span> <span class="n">-VaultName</span> <span class="nv">$VAULT_NAME</span> <span class="n">-Name</span> <span class="s2">&quot;webex-token-database&quot;</span> <span class="n">-SecretValue</span> <span class="nv">$sec</span>
+
+<span class="nv">$rawSys</span> <span class="p">=</span> <span class="nb">Get-Content</span> <span class="n">-Raw</span> <span class="s2">&quot;./webex-token-system.txt&quot;</span>
+<span class="nv">$secSys</span> <span class="p">=</span> <span class="nb">ConvertTo-SecureString</span> <span class="nv">$rawSys</span> <span class="n">-AsPlainText</span> <span class="n">-Force</span>
+<span class="nb">Set-AzKeyVaultSecret</span> <span class="n">-VaultName</span> <span class="nv">$VAULT_NAME</span> <span class="n">-Name</span> <span class="s2">&quot;webex-token-system&quot;</span> <span class="n">-SecretValue</span> <span class="nv">$secSys</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>Create the UAMI and grant <strong>Key Vault Secrets User</strong> on the vault:</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-3" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-6">
+<input checked="checked" id="sd-tab-item-8" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-8">
 Bash</label><div class="sd-tab-content docutils">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">UAMI_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>identity<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;thaum-aca-secrets&quot;</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">UAMI_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>identity<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$UAMI_NAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>--location<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOCATION</span><span class="s2">&quot;</span><span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
 <span class="nv">UAMI_PRINCIPAL</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>identity<span class="w"> </span>show<span class="w"> </span>--ids<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$UAMI_ID</span><span class="s2">&quot;</span><span class="w"> </span>--query<span class="w"> </span>principalId<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
 
@@ -488,11 +533,11 @@ az<span class="w"> </span>role<span class="w"> </span>assignment<span class="w">
 </pre></div>
 </div>
 </div>
-<input id="sd-tab-item-7" name="sd-tab-set-3" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-7">
+<input id="sd-tab-item-9" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-9">
 PowerShell</label><div class="sd-tab-content docutils">
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$uami</span> <span class="p">=</span> <span class="nb">New-AzUserAssignedIdentity</span> <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="p">`</span>
-  <span class="n">-Name</span> <span class="s2">&quot;thaum-aca-secrets&quot;</span> <span class="n">-Location</span> <span class="nv">$LOCATION</span>
+  <span class="n">-Name</span> <span class="nv">$UAMI_NAME</span> <span class="n">-Location</span> <span class="nv">$LOCATION</span>
 <span class="nv">$UAMI_ID</span> <span class="p">=</span> <span class="nv">$uami</span><span class="p">.</span><span class="n">Id</span>
 <span class="nv">$uamiPrincipal</span> <span class="p">=</span> <span class="nv">$uami</span><span class="p">.</span><span class="n">PrincipalId</span>
 
@@ -522,8 +567,8 @@ PowerShell</label><div class="sd-tab-content docutils">
 <h3>3.1 — Placeholder image and UAMI<a class="headerlink" href="#placeholder-image-and-uami" title="Link to this heading">¶</a></h3>
 <p>Resolve the managed environment resource ID, then create the app and assign identity.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-8" name="sd-tab-set-4" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-8">
+<input checked="checked" id="sd-tab-item-10" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-10">
 Bash</label><div class="sd-tab-content docutils">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ENV_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>containerapp<span class="w"> </span>env<span class="w"> </span>show<span class="w"> </span>-g<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ENVIRONMENT</span><span class="s2">&quot;</span><span class="w"> </span>--query<span class="w"> </span>id<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
 <span class="nv">PLACEHOLDER</span><span class="o">=</span><span class="s2">&quot;mcr.microsoft.com/azuredocs/aci-helloworld:latest&quot;</span>
@@ -543,8 +588,8 @@ az<span class="w"> </span>containerapp<span class="w"> </span>identity<span clas
 </pre></div>
 </div>
 </div>
-<input id="sd-tab-item-9" name="sd-tab-set-4" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-9">
+<input id="sd-tab-item-11" name="sd-tab-set-5" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-11">
 PowerShell</label><div class="sd-tab-content docutils">
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$envId</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-AzContainerAppManagedEnv</span> <span class="p">`</span>
   <span class="n">-ResourceGroupName</span> <span class="nv">$RESOURCE_GROUP</span> <span class="n">-Name</span> <span class="nv">$ENVIRONMENT</span><span class="p">).</span><span class="n">Id</span>
@@ -567,17 +612,41 @@ PowerShell</label><div class="sd-tab-content docutils">
 </section>
 <section id="application-secrets-keyvaultref">
 <h3>3.2 — Application secrets (<code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code>)<a class="headerlink" href="#application-secrets-keyvaultref" title="Link to this heading">¶</a></h3>
-<p>Use <strong>Azure CLI</strong> for <code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code> quoting (works from Bash or PowerShell):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">SECRET_URI</span><span class="o">=</span><span class="s2">&quot;https://</span><span class="si">${</span><span class="nv">VAULT_NAME</span><span class="si">}</span><span class="s2">.vault.azure.net/secrets/webex-token-database&quot;</span>
+<p>Use <strong>Azure CLI</strong> for <code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code> quoting (Bash or PowerShell tabs below). Define every ACA secret on <strong>one</strong> <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">secret</span> <span class="pre">set</span></code> invocation: a <strong>single</strong> <code class="docutils literal notranslate"><span class="pre">--secrets</span></code> argument whose value is a <strong>space-separated</strong> list of <code class="docutils literal notranslate"><span class="pre">name=keyvaultref:...,identityref:...</span></code> entries. Quote each entry (commas appear inside <code class="docutils literal notranslate"><span class="pre">keyvaultref</span></code> values). Do <strong>not</strong> pass <code class="docutils literal notranslate"><span class="pre">--secrets</span></code> more than once on the same command.</p>
+<p>To add credentials later you may run <code class="docutils literal notranslate"><span class="pre">secret</span> <span class="pre">set</span></code> again, but the usual pattern is one command with all secrets you need for the revision.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-12" name="sd-tab-set-6" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-12">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">SECRET_URI_DB</span><span class="o">=</span><span class="s2">&quot;https://</span><span class="si">${</span><span class="nv">VAULT_NAME</span><span class="si">}</span><span class="s2">.vault.azure.net/secrets/webex-token-database&quot;</span>
+<span class="nv">SECRET_URI_SYS</span><span class="o">=</span><span class="s2">&quot;https://</span><span class="si">${</span><span class="nv">VAULT_NAME</span><span class="si">}</span><span class="s2">.vault.azure.net/secrets/webex-token-system&quot;</span>
 
 az<span class="w"> </span>containerapp<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_NAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--secrets<span class="w"> </span><span class="s2">&quot;webex-token-database=keyvaultref:</span><span class="si">${</span><span class="nv">SECRET_URI</span><span class="si">}</span><span class="s2">,identityref:</span><span class="si">${</span><span class="nv">UAMI_ID</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">  </span>--secrets<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s2">&quot;webex-token-database=keyvaultref:</span><span class="si">${</span><span class="nv">SECRET_URI_DB</span><span class="si">}</span><span class="s2">,identityref:</span><span class="si">${</span><span class="nv">UAMI_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s2">&quot;webex-token-system=keyvaultref:</span><span class="si">${</span><span class="nv">SECRET_URI_SYS</span><span class="si">}</span><span class="s2">,identityref:</span><span class="si">${</span><span class="nv">UAMI_ID</span><span class="si">}</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
-<p>Repeat with additional space-separated <code class="docutils literal notranslate"><span class="pre">--secrets</span> <span class="pre">&quot;name=...&quot;</span></code> pairs for each credential.</p>
-<p>In <code class="docutils literal notranslate"><span class="pre">thaum.toml</span></code>, reference <code class="docutils literal notranslate"><span class="pre">secret:webex-token-database</span></code> (matching the ACA secret name). See <a class="reference internal" href="#azure-aca-file-vs-env-secrets"><span class="std std-ref">File-mounted secrets vs environment variable secrets</span></a>.</p>
+</div>
+<input id="sd-tab-item-13" name="sd-tab-set-6" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-13">
+PowerShell</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$secretUriDb</span> <span class="p">=</span> <span class="s2">&quot;https://$VAULT_NAME.vault.azure.net/secrets/webex-token-database&quot;</span>
+<span class="nv">$secretUriSys</span> <span class="p">=</span> <span class="s2">&quot;https://$VAULT_NAME.vault.azure.net/secrets/webex-token-system&quot;</span>
+
+<span class="n">az</span> <span class="n">containerapp</span> <span class="n">secret</span> <span class="nb">set </span><span class="p">`</span>
+  <span class="p">-</span><span class="n">-name</span> <span class="nv">$APP_NAME</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-resource-group</span> <span class="nv">$RESOURCE_GROUP</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-secrets</span> <span class="p">`</span>
+    <span class="s2">&quot;webex-token-database=keyvaultref:${secretUriDb},identityref:${UAMI_ID}&quot;</span> <span class="p">`</span>
+    <span class="s2">&quot;webex-token-system=keyvaultref:${secretUriSys},identityref:${UAMI_ID}&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">thaum.toml</span></code>, reference <code class="docutils literal notranslate"><span class="pre">secret:webex-token-database</span></code> and <code class="docutils literal notranslate"><span class="pre">secret:webex-token-system</span></code> (matching the ACA secret names). See <a class="reference internal" href="#azure-aca-file-vs-env-secrets"><span class="std std-ref">File-mounted secrets vs environment variable secrets</span></a>.</p>
 </section>
 <section id="real-image-volume-mount-registry-ingress">
 <h3>3.3 — Real image, volume mount, registry, ingress<a class="headerlink" href="#real-image-volume-mount-registry-ingress" title="Link to this heading">¶</a></h3>
@@ -586,19 +655,38 @@ az<span class="w"> </span>containerapp<span class="w"> </span>secret<span class=
 <p class="admonition-title">Important</p>
 <p><code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">update</span></code> does <strong>not</strong> accept <code class="docutils literal notranslate"><span class="pre">--target-port</span></code>. After switching from the placeholder (port 80) to Thaum (5165), run <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">ingress</span> <span class="pre">update</span></code> separately.</p>
 </div>
+<p>Set deploy-specific variables (image and GHCR pull credentials for ACA). Export <code class="docutils literal notranslate"><span class="pre">GHCR_PULL_PAT</span></code> from your machine-user <code class="docutils literal notranslate"><span class="pre">read:packages</span></code> token—do not paste it into shell history or commit it.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-10" name="sd-tab-set-5" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-10">
+<input checked="checked" id="sd-tab-item-14" name="sd-tab-set-7" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-14">
 Bash</label><div class="sd-tab-content docutils">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">IMAGE</span><span class="o">=</span><span class="s2">&quot;ghcr.io/your-org/your-repo:your-tag&quot;</span>
-
-az<span class="w"> </span>containerapp<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">IMAGE</span><span class="o">=</span><span class="s2">&quot;ghcr.io/</span><span class="si">${</span><span class="nv">OWNER</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">REPO</span><span class="si">}</span><span class="s2">:&lt;tag&gt;&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GHCR_PULL_USERNAME</span><span class="o">=</span><span class="s2">&quot;thaum-ghcr-bot&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GHCR_PULL_PAT</span><span class="o">=</span><span class="s2">&quot;&lt;machine-user-read-packages-pat&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-15" name="sd-tab-set-7" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-15">
+PowerShell</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$IMAGE</span> <span class="p">=</span> <span class="s2">&quot;ghcr.io/$OWNER/${REPO}:&lt;tag&gt;&quot;</span>
+<span class="nv">$GHCR_PULL_USERNAME</span> <span class="p">=</span> <span class="s2">&quot;thaum-ghcr-bot&quot;</span>
+<span class="nv">$GHCR_PULL_PAT</span> <span class="p">=</span> <span class="s2">&quot;&lt;machine-user-read-packages-pat&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-16" name="sd-tab-set-8" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-16">
+Bash</label><div class="sd-tab-content docutils">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>containerapp<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_NAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--resource-group<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$RESOURCE_GROUP</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--image<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$IMAGE</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--registry-server<span class="w"> </span>ghcr.io<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--registry-username<span class="w"> </span><span class="s2">&quot;MACHINE_USER_LOGIN&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--registry-password<span class="w"> </span><span class="s2">&quot;MACHINE_USER_READ_PACKAGES_PAT&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--registry-username<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GHCR_PULL_USERNAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--registry-password<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GHCR_PULL_PAT</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--secret-volume-mount<span class="w"> </span><span class="s2">&quot;/run/secrets&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--set-env-vars<span class="w"> </span><span class="s2">&quot;THAUM_CREDS_DIR=/tmp/thaum-creds&quot;</span>
 
@@ -609,8 +697,8 @@ az<span class="w"> </span>containerapp<span class="w"> </span>ingress<span class
 </pre></div>
 </div>
 </div>
-<input id="sd-tab-item-11" name="sd-tab-set-5" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-11">
+<input id="sd-tab-item-17" name="sd-tab-set-8" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-17">
 PowerShell</label><div class="sd-tab-content docutils">
 <p>Run the same <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">update</span></code> and <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">ingress</span> <span class="pre">update</span></code> commands from the Bash tab (recommended). Alternatively, use your <code class="docutils literal notranslate"><span class="pre">Az.App</span></code> version’s ingress surface (<code class="docutils literal notranslate"><span class="pre">Get-Help</span> <span class="pre">Update-AzContainerApp</span></code>, <code class="docutils literal notranslate"><span class="pre">Get-Command</span> <span class="pre">*ContainerApp*Ingress*</span></code>) to set <strong>target port</strong> to <strong>5165</strong> after updating image, registry, and env/volume flags—do not pass target port on <code class="docutils literal notranslate"><span class="pre">Update-AzContainerApp</span></code> if the cmdlet rejects it.</p>
 </div>
@@ -783,32 +871,38 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 <div class="table-wrapper colwidths-given docutils container">
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 31.1%" />
-<col style="width: 13.3%" />
-<col style="width: 55.6%" />
+<col style="width: 28.0%" />
+<col style="width: 10.0%" />
+<col style="width: 32.0%" />
+<col style="width: 30.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Variable</p></th>
 <th class="head"><p>Required</p></th>
 <th class="head"><p>Purpose</p></th>
+<th class="head"><p>Example (match shell variables above)</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AZURE_RESOURCE_GROUP</span></code></p></td>
 <td><p>Yes</p></td>
 <td><p>Resource group of the Container App</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">thaum-prod-rg</span></code> (same as <code class="docutils literal notranslate"><span class="pre">RESOURCE_GROUP</span></code>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AZURE_CONTAINERAPP_NAME</span></code></p></td>
 <td><p>Yes</p></td>
 <td><p>Container App name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">thaum-prod</span></code> (same as <code class="docutils literal notranslate"><span class="pre">APP_NAME</span></code>)</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GHCR_PULL_USERNAME</span></code></p></td>
 <td><p>Yes for <code class="docutils literal notranslate"><span class="pre">deploy_aca</span></code></p></td>
 <td><p>Machine user login for registry <code class="docutils literal notranslate"><span class="pre">--username</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">thaum-ghcr-bot</span></code> (same as <code class="docutils literal notranslate"><span class="pre">GHCR_PULL_USERNAME</span></code>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GHCR_IMAGE</span></code></p></td>
 <td><p>No</p></td>
 <td><p>Full image <strong>without tag</strong>; default <code class="docutils literal notranslate"><span class="pre">ghcr.io/&lt;lower(owner/repo)&gt;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ghcr.io/your-org/your-deploy-repo</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -836,8 +930,8 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 <section id="cli-provisioning">
 <h3>CLI provisioning<a class="headerlink" href="#cli-provisioning" title="Link to this heading">¶</a></h3>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-12" name="sd-tab-set-6" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-12">
+<input checked="checked" id="sd-tab-item-18" name="sd-tab-set-9" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-18">
 Bash</label><div class="sd-tab-content docutils">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">APP_DISPLAY_NAME</span><span class="o">=</span><span class="s2">&quot;gha-thaum-deploy&quot;</span>
 <span class="nv">CLIENT_ID</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>ad<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>--display-name<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$APP_DISPLAY_NAME</span><span class="s2">&quot;</span><span class="w"> </span>--query<span class="w"> </span>appId<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
@@ -858,8 +952,8 @@ az<span class="w"> </span>ad<span class="w"> </span>app<span class="w"> </span>f
 </pre></div>
 </div>
 </div>
-<input id="sd-tab-item-13" name="sd-tab-set-6" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-13">
+<input id="sd-tab-item-19" name="sd-tab-set-9" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-19">
 PowerShell</label><div class="sd-tab-content docutils">
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$app</span> <span class="p">=</span> <span class="nb">New-AzADApplication</span> <span class="n">-DisplayName</span> <span class="s2">&quot;gha-thaum-deploy&quot;</span>
 <span class="nb">New-AzADServicePrincipal</span> <span class="n">-ApplicationId</span> <span class="nv">$app</span><span class="p">.</span><span class="n">AppId</span>
@@ -883,8 +977,8 @@ PowerShell</label><div class="sd-tab-content docutils">
 <h2>Azure role assignment (deploy principal)<a class="headerlink" href="#azure-role-assignment-deploy-principal" title="Link to this heading">¶</a></h2>
 <p>The automation principal needs permission for <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">update</span></code> and <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">containerapp</span> <span class="pre">registry</span> <span class="pre">set</span></code>.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="sd-tab-item-14" name="sd-tab-set-7" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-14">
+<input checked="checked" id="sd-tab-item-20" name="sd-tab-set-10" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="bash" for="sd-tab-item-20">
 Bash</label><div class="sd-tab-content docutils">
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--assignee<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CLIENT_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -893,8 +987,8 @@ Bash</label><div class="sd-tab-content docutils">
 </pre></div>
 </div>
 </div>
-<input id="sd-tab-item-15" name="sd-tab-set-7" type="radio">
-<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-15">
+<input id="sd-tab-item-21" name="sd-tab-set-10" type="radio">
+<label class="sd-tab-label" data-sync-group="aca-shell" data-sync-id="powershell" for="sd-tab-item-21">
 PowerShell</label><div class="sd-tab-content docutils">
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nv">$rgScope</span> <span class="p">=</span> <span class="s2">&quot;/subscriptions/SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP&quot;</span>
 <span class="nv">$deploySp</span> <span class="p">=</span> <span class="nb">Get-AzADServicePrincipal</span> <span class="n">-ApplicationId</span> <span class="nv">$CLIENT_ID</span>
@@ -985,7 +1079,10 @@ PowerShell</label><div class="sd-tab-content docutils">
 <li><a class="reference internal" href="#">Azure Container Apps Quickstart</a><ul>
 <li><a class="reference internal" href="#requirements-for-this-deployment-pattern">Requirements for this deployment pattern</a></li>
 <li><a class="reference internal" href="#what-you-get">What you get</a></li>
-<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li><a class="reference internal" href="#define-variables">Define variables</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#step-1-resource-group-log-analytics-container-apps-environment">Step 1 — Resource group, Log Analytics, Container Apps environment</a></li>
 <li><a class="reference internal" href="#step-2-key-vault-and-user-assigned-managed-identity">Step 2 — Key Vault and user-assigned managed identity</a><ul>
 <li><a class="reference internal" href="#grant-operator-access-and-create-secrets">Grant operator access and create secrets</a></li>
