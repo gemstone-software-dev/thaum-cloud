@@ -6,9 +6,11 @@ This public repo is a **starting point and documentation** for that pattern. The
 
 ## Documentation
 
-**Full guide (introduction, security posture, Git workflow, quickstarts):**
+Published docs (introduction, security posture, Git workflow, quickstarts):
 
 **https://gemstone-software-dev.github.io/thaum-cloud/**
+
+- [Azure Container Apps quickstart](https://gemstone-software-dev.github.io/thaum-cloud/quickstart/azure/quickstart_aca.html)
 
 Build locally from the repo root:
 
@@ -26,7 +28,7 @@ Publish to GitHub Pages: run the **Publish documentation** workflow (see [.githu
 2. Edit [thaum.toml](thaum.toml) and [Dockerfile](Dockerfile) (`FROM` image tag, extra `COPY` assets).
 3. Follow the **[Azure Container Apps quickstart](https://gemstone-software-dev.github.io/thaum-cloud/quickstart/azure/quickstart_aca.html)** to provision Azure resources, configure Actions secrets/variables, and run [.github/workflows/deploy-aca.yml](.github/workflows/deploy-aca.yml).
 
-Source for the quickstart also lives under [doc/quickstart/azure/quickstart_aca.rst](doc/quickstart/azure/quickstart_aca.rst) and [doc/quickstart/cloud/azure/](doc/quickstart/cloud/azure/).
+Sphinx source: [doc/quickstart/azure/quickstart_aca.rst](doc/quickstart/azure/quickstart_aca.rst).
 
 ## Repository layout
 

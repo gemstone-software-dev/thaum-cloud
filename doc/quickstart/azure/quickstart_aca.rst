@@ -81,6 +81,50 @@ Set these placeholders consistently in every command below:
 | ``OWNER`` / ``REPO`` | GitHub repository ``owner/repo``                        |
 +---------------------+----------------------------------------------------------+
 
+Concrete example values are in **Define variables** below (set once per shell session before Step 1).
+
+Define variables
+----------------
+
+Set these in your shell before running the provisioning commands. Use your subscription GUID (``az account show --query id -o tsv``) and replace example names where noted.
+
+**``VAULT_NAME``** must be **globally unique** across Azure—append your organization id, environment name, or random characters (for example ``a1b2``); do not reuse the doc literals if the name is already taken.
+
+.. tab-set::
+   :sync-group: aca-shell
+
+   .. tab-item:: Bash
+      :sync: bash
+
+      .. code-block:: bash
+
+         export SUBSCRIPTION_ID="<your-subscription-guid>"
+         export LOCATION="eastus"
+         export RESOURCE_GROUP="thaum-prod-rg"
+         export WORKSPACE="thaum-prod-logs"
+         export ENVIRONMENT="thaum-prod-env"
+         export APP_NAME="thaum-prod"
+         export VAULT_NAME="thaum-prod-kv-a1b2"
+         export UAMI_NAME="thaum-prod-secrets"
+         export OWNER="your-org"
+         export REPO="your-deploy-repo"
+
+   .. tab-item:: PowerShell
+      :sync: powershell
+
+      .. code-block:: powershell
+
+         $SUBSCRIPTION_ID = "<your-subscription-guid>"
+         $LOCATION         = "eastus"
+         $RESOURCE_GROUP   = "thaum-prod-rg"
+         $WORKSPACE        = "thaum-prod-logs"
+         $ENVIRONMENT      = "thaum-prod-env"
+         $APP_NAME         = "thaum-prod"
+         $VAULT_NAME       = "thaum-prod-kv-a1b2"
+         $UAMI_NAME        = "thaum-prod-secrets"
+         $OWNER            = "your-org"
+         $REPO             = "your-deploy-repo"
+
 
 .. _azure-aca-step1:
 
@@ -230,7 +274,7 @@ Create the UAMI and grant **Key Vault Secrets User** on the vault:
 
       .. code-block:: bash
 
-         UAMI_ID=$(az identity create --name "thaum-aca-secrets" \
+         UAMI_ID=$(az identity create --name "$UAMI_NAME" \
            --resource-group "$RESOURCE_GROUP" --location "$LOCATION" --query id -o tsv)
          UAMI_PRINCIPAL=$(az identity show --ids "$UAMI_ID" --query principalId -o tsv)
 
@@ -246,7 +290,7 @@ Create the UAMI and grant **Key Vault Secrets User** on the vault:
       .. code-block:: powershell
 
          $uami = New-AzUserAssignedIdentity -ResourceGroupName $RESOURCE_GROUP `
-           -Name "thaum-aca-secrets" -Location $LOCATION
+           -Name $UAMI_NAME -Location $LOCATION
          $UAMI_ID = $uami.Id
          $uamiPrincipal = $uami.PrincipalId
 
@@ -350,6 +394,8 @@ Mount secrets under ``/run/secrets`` and set ``THAUM_CREDS_DIR`` so the Thaum ``
 
    ``az containerapp update`` does **not** accept ``--target-port``. After switching from the placeholder (port 80) to Thaum (5165), run ``az containerapp ingress update`` separately.
 
+Set deploy-specific variables (image and GHCR pull credentials for ACA). Export ``GHCR_PULL_PAT`` from your machine-user ``read:packages`` token—do not paste it into shell history or commit it.
+
 .. tab-set::
    :sync-group: aca-shell
 
@@ -358,15 +404,34 @@ Mount secrets under ``/run/secrets`` and set ``THAUM_CREDS_DIR`` so the Thaum ``
 
       .. code-block:: bash
 
-         IMAGE="ghcr.io/your-org/your-repo:your-tag"
+         export IMAGE="ghcr.io/${OWNER}/${REPO}:<tag>"
+         export GHCR_PULL_USERNAME="thaum-ghcr-bot"
+         export GHCR_PULL_PAT="<machine-user-read-packages-pat>"
+
+   .. tab-item:: PowerShell
+      :sync: powershell
+
+      .. code-block:: powershell
+
+         $IMAGE = "ghcr.io/$OWNER/${REPO}:<tag>"
+         $GHCR_PULL_USERNAME = "thaum-ghcr-bot"
+         $GHCR_PULL_PAT = "<machine-user-read-packages-pat>"
+
+.. tab-set::
+   :sync-group: aca-shell
+
+   .. tab-item:: Bash
+      :sync: bash
+
+      .. code-block:: bash
 
          az containerapp update \
            --name "$APP_NAME" \
            --resource-group "$RESOURCE_GROUP" \
            --image "$IMAGE" \
            --registry-server ghcr.io \
-           --registry-username "MACHINE_USER_LOGIN" \
-           --registry-password "MACHINE_USER_READ_PACKAGES_PAT" \
+           --registry-username "$GHCR_PULL_USERNAME" \
+           --registry-password "$GHCR_PULL_PAT" \
            --secret-volume-mount "/run/secrets" \
            --set-env-vars "THAUM_CREDS_DIR=/tmp/thaum-creds"
 
@@ -540,23 +605,28 @@ Repository variables (**Variables**)
 
 .. list-table::
    :header-rows: 1
-   :widths: 28 12 50
+   :widths: 28 10 32 30
 
    * - Variable
      - Required
      - Purpose
+     - Example (match shell variables above)
    * - ``AZURE_RESOURCE_GROUP``
      - Yes
      - Resource group of the Container App
+     - ``thaum-prod-rg`` (same as ``RESOURCE_GROUP``)
    * - ``AZURE_CONTAINERAPP_NAME``
      - Yes
      - Container App name
+     - ``thaum-prod`` (same as ``APP_NAME``)
    * - ``GHCR_PULL_USERNAME``
      - Yes for ``deploy_aca``
      - Machine user login for registry ``--username``
+     - ``thaum-ghcr-bot`` (same as ``GHCR_PULL_USERNAME``)
    * - ``GHCR_IMAGE``
      - No
      - Full image **without tag**; default ``ghcr.io/<lower(owner/repo)>``
+     - ``ghcr.io/your-org/your-deploy-repo``
 
 
 .. _azure-aca-oidc:
