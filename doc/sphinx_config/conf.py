@@ -27,6 +27,7 @@ version = release
 
 extensions = [
     "sphinx_design",
+    "sphinx_copybutton",
 ]
 
 root_doc = "index"
